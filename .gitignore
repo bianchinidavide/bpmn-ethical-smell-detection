@@ -1,0 +1,36 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+.venv/
+ENV/
+
+# Environment variables & credentials
+.env
+.streamlit/secrets.toml
+
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Testing & coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# IDE & editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary data dumps & logs
+*_parsed.txt
+*.log

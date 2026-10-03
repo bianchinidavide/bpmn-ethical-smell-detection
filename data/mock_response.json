@@ -1,0 +1,44 @@
+{
+  "violazioni": [
+    {
+      "id_nodo": "Activity_0ntkbj5",
+      "codice_smell": "ES-08",
+      "spiegazione": "Il percorso di iscrizione è interamente confinato nella corsia 'App Utente' e impone azioni strettamente digitali (compilazione form online e caricamento fronte-retro del documento d'identità in formato immagine/PDF). Non esiste alcun Gateway, Lane o Task alternativo (sportello in palestra, assistenza telefonica, inserimento pratica da parte di un operatore della reception) né materiale di supporto/tutorial. Un'utenza anziana o priva di competenze/strumenti digitali (scanner, smartphone) resta di fatto esclusa dall'accesso al servizio, che per sua natura (frequentazione di una palestra fisica) non è un servizio nativamente digitale e quindi non rientra nell'eccezione giustificata."
+    },
+    {
+      "id_nodo": "Activity_16dfx3v",
+      "codice_smell": "ES-07",
+      "spiegazione": "Il processo impone all'utente un controllo di identità severo e unilaterale (upload del documento d'identità fronte-retro seguito dal Service Task automatico di 'Controllo dati utente' e dal gateway di validazione), ma non prevede alcun task speculare di garanzia in uscita: non esiste un Service Task di firma digitale, sigillo elettronico o timestamp sul contratto di abbonamento, né la consegna all'utente di una copia certificata delle condizioni sottoscritte. L'organizzazione si tutela contro la frode mentre l'utente, vincolato a un contratto a rinnovo con addebiti ricorrenti, resta privo di prove documentali opponibili in caso di disputa (asimmetria di fiducia)."
+    },
+    {
+      "id_nodo": "TimerCatch_Mese",
+      "codice_smell": "ES-13",
+      "spiegazione": "L'evento 'Scadenza Mensilità' governa un ciclo di rinnovo/fatturazione periodica dell'abbonamento che prosegue indefinitamente finché l'utente non attiva la procedura di disdetta. Il ramo mensile contiene esclusivamente logiche a favore dell'azienda (verifica degli accessi ai servizi al solo fine di 'Aggiungere maggiorazioni'), ma è del tutto privo di un Business Rule Task che analizzi l'inattività del cliente (es. zero ingressi in palestra per più mesi) e di un Gateway che devii verso un Send Task di avviso o verso la proposta di sospensione/downgrade. Il processo lucra quindi silenziosamente sull'inerzia dell'abbonato non frequentante; la palestra non rientra nelle eccezioni (assicurazioni, backup, servizi di emergenza) in cui il non-utilizzo è fisiologico."
+    },
+    {
+      "id_nodo": "ServiceTask_Analytics",
+      "codice_smell": "ES-05",
+      "spiegazione": "Il Service Task 'Verificare accesso ai servizi' esegue in background, nella Lane Backend, un monitoraggio del comportamento di fruizione dell'utente (accessi e utilizzo dei servizi extra) il cui output alimenta direttamente il Gateway 'Accesso servizi extra?' e il conseguente ricalcolo economico al rialzo. Non è modellato alcun momento di trasparenza verso l'utente (nessun consenso, nessuna informativa, nessuna reportistica dei consumi rilevati), né alcun User Task di revisione: l'utente subisce una variazione delle condizioni economiche derivante da metriche raccolte e valutate in modo opaco e unilaterale a vantaggio dell'azienda."
+    },
+    {
+      "id_nodo": "Activity_073sj9e",
+      "codice_smell": "ES-12",
+      "spiegazione": "Il Service Task 'Aggiungere maggiorazioni' applica un onere economico aggiuntivo a carico dell'utente e il flusso confluisce nel Gateway_0lk5o9w terminando in modo cieco, senza che sia interposto alcun Send Task di notifica (email/SMS/push) che comunichi all'abbonato l'avvenuta maggiorazione, la sua causale e l'importo. L'utente scopre l'addebito solo a posteriori sull'estratto conto, subendo una decisione economica silente: manca la chiusura trasparente del cerchio comunicativo richiesta per ogni esito che impatta l'utente."
+    },
+    {
+      "id_nodo": "MessageCatch_Raccomandata",
+      "codice_smell": "ES-06",
+      "spiegazione": "Esiste una palese asimmetria di attrito tra adesione e recesso (dark pattern 'Roach Motel'/'Hard to Cancel'): l'iscrizione e il pagamento avvengono interamente in autonomia digitale con pochi User Task nell'App Utente, mentre l'unico canale di uscita modellato è un Message Catch Event che richiede l'invio di una Raccomandata A/R cartacea. Ciò impone al cliente costi economici (spedizione), spostamenti fisici all'ufficio postale e competenze burocratiche sproporzionate rispetto alla semplicità dell'adesione, con l'evidente finalità di scoraggiare la disdetta e prolungare gli addebiti. Non ricorre alcuna esigenza di sicurezza o conformità legale che giustifichi l'esclusione del canale digitale per il recesso."
+    },
+    {
+      "id_nodo": "Event_1vo8efj",
+      "codice_smell": "ES-06",
+      "spiegazione": "Al protocollo della disdetta segue un Intermediate Catch Event temporale di 30 giorni ('Tempi di lavorazione pratica') che funge da attrito artificiale: durante tale finestra il rapporto resta attivo e il loop di fatturazione mensile continua a poter scattare. Questo timer non ha alcuna giustificazione tecnica o legale (la cessazione è una semplice disattivazione in backend) e si somma all'onere della raccomandata, configurando un percorso di uscita intenzionalmente labirintico e lento rispetto all'attivazione immediata dell'abbonamento ('Attivare Abbonamento' è un Service Task istantaneo)."
+    },
+    {
+      "id_nodo": "UserTask_Protocollo",
+      "codice_smell": "ES-12",
+      "spiegazione": "Il ramo di disdetta gestito dall'Ufficio Amministrativo si conclude con l'evento di attesa 'Tempi di lavorazione pratica: 30 gg' che termina in 'Fine Flusso' senza alcun Send Task di conferma: l'End Event 'Notifica cessazione contratto' risulta isolato e non collegato da alcun sequence flow al percorso di protocollazione. Di fatto l'utente che ha inviato la raccomandata non riceve né una presa in carico, né una conferma finale dell'avvenuta cessazione e dell'interruzione degli addebiti, restando in attesa indefinita."
+    }
+  ]
+}

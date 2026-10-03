@@ -1,0 +1,33 @@
+<div class="ethical-card">
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
+        <div>
+            <div style="font-size: 11px; font-weight: 600; color: #3b82f6; letter-spacing: 0.5px; margin-bottom: 5px;">Macro-principio etico violato: {{ macro }}</div>
+            <div style="font-size: 20px; font-weight: 600; color: #0f172a;">{{ name }}</div>
+        </div>
+        <div style="background-color: #f1f5f9; border: 1px solid #cbd5e1; padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 600; color: #475569; text-align: right;">
+            Elemento del processo: <span style="color: #d93025;">{{ node_name or violazione.id_nodo }}</span>
+            {% if node_name and node_name != violazione.id_nodo %}
+            <br><span style="font-size: 11px; color: #94a3b8; font-weight: 400;">ID BPMN: {{ violazione.id_nodo }}</span>
+            {% endif %}
+        </div>
+    </div>
+    <div style="margin-top: 20px; padding-top: 20px; border-top: 1px dashed #cbd5e1;">
+        <div style="font-size: 14px; font-weight: 600; color: #64748b; letter-spacing: 0.5px; margin-bottom: 8px;">Diagnosi dell'LLM</div>
+        <div style="font-size: 16px; color: #334155; line-height: 1.6; font-weight: 400; margin-bottom: 20px;">{{ violazione.spiegazione }}</div>
+        
+        <div style="font-size: 14px; font-weight: 600; color: #64748b; letter-spacing: 0.5px; margin-bottom: 8px;">Razionale etico</div>
+        <div style="font-size: 16px; color: #334155; line-height: 1.6; font-weight: 400; margin-bottom: 20px;">{{ rationale }}</div>
+        
+        <div style="font-size: 14px; font-weight: 600; color: #64748b; letter-spacing: 0.5px; margin-bottom: 8px;">Suggerimento per la mitigazione della criticità</div>
+        <div style="font-size: 16px; color: #334155; line-height: 1.6; font-weight: 400; margin-bottom: 20px;">{{ action }}</div>
+        
+        {% if sources %}
+        <div style="font-size: 14px; font-weight: 600; color: #64748b; letter-spacing: 0.5px; margin-bottom: 8px;">Fonti normative e standard di riferimento</div>
+        <ul style="margin-top: 0; padding-left: 20px;">
+            {% for source in sources %}
+            <li style="margin-bottom: 4px;">{{ source }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+</div>

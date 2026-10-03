@@ -1,0 +1,727 @@
+[
+  {
+    "id": "ES-01",
+    "smell_name": "Discriminazione di Genere",
+    "macro_principle": "Uguaglianza e Anti-discriminazione",
+    "sources": [
+      "Carta dei Diritti Fondamentali dell'UE (Art. 21; Art. 23)",
+      "Statuto dei Lavoratori (Art. 15)",
+      "AI Act (Discriminazione algoritmica)",
+      "*ISO 26000* (Responsabilità sociale, cap. 6.3 e 6.4)"
+    ],
+    "ethical_rationale": "Discriminare un individuo in base al genere viola i diritti umani fondamentali. L'azione discriminatoria si concretizza quando il processo penalizza, esclude o favorisce una persona sulla base del genere anziché utilizzare parametri oggettivi, meritocratici e pertinenti.",
+    "semantic_context": {
+      "target_situations": "Qualsiasi processo in cui l'accesso a un servizio, un'assunzione, l'assegnazione di un compito, una decisione dipende dal superamento di uno snodo decisionale basato su attributi anagrafici o personali dell'utente.",
+      "dangerous_actions": "Anti-pattern Esplicito: Presenza di un gateway decisionale che valuta esplicitamente l'identità di genere deviando il flusso verso un percorso escludente o peggiorativo. Anti-pattern Implicito: Presenza di un task automatico che potrebbe filtrare, valutare o decidere le sorti del processo sulla base dell'identità di genere."
+    },
+    "reasoning_steps": [
+      "1. IDENTIFICAZIONE: Cerca nel diagramma la presenza di Exclusive Gateway che utilizzano espressioni legate al genere (es. 'gender', 'sesso', 'maschio', 'femmina') per separare il flusso, oppure identifica Business Rule Task o Service Task automatici che agiscono come filtri anagrafici opachi.",
+      "2. VALUTAZIONE: Verifica se l'esito di questa ramificazione o decisione automatica indirizza l'istanza direttamente verso un percorso svantaggioso, escludente, vantaggioso oppure verso un End Event di rifiuto.",
+      "3. VERIFICA SALVAGUARDIE ED ECCEZIONI: Controlla se il processo è privo di tutele, verificando l'assenza di User Task (revisione umana) o scopo etico nella divisione per identità di genere. Assicurati che non si tratti di un falso positivo giustificato (es. divisione del flusso per vincoli biologico-sanitari o normative di riequilibrio sociale)."
+    ],
+    "recommendation_pattern": {
+      "action": "Rendere il processo neutrale rispetto all'identità di genere. Le decisioni devono basarsi esclusivamente su parametri oggettivi, meritocratici e pertinenti al processo.",
+      "bpmn_correction": "Rimuovere l'attributo di genere dalla condizione (<bpmn:conditionExpression>) dell'Exclusive Gateway. Se il gateway serviva esclusivamente a separare i sessi, eliminarlo per unificare il flusso; se valutava più requisiti, riconfigurarlo per interrogare unicamente le variabili pertinenti. Nel caso di task automatici assicurarsi che essi non operino sulla base di criteri discriminati."
+    },
+    "examples": [
+      {
+        "as_is_1": "Un processo instrada automaticamente le istanze di assegnazione del turno di lavoro in base al genere (es. se maschio ramo mattina, se femmina ramo pomeriggio).",
+        "to_be_1": "Il flusso di assegnazione instrada le istanze valutando unicamente la disponibilità residua, l'anzianità o le preferenze dichiarate dal dipendente rimuovendo la discriminazione.",
+        "as_is_2": "Un sistema per l'assegnazione delle attività extrascolastiche (es. club di robotica) legge il genere dell'alunno. Se femmina, il gateway devia l'iscrizione verso una lista d'attesa secondaria per dare priorità algoritmica ai maschi.",
+        "to_be_2": "Il sistema processa le iscrizioni a tutti i corsi valutando rigorosamente l'ordine cronologico di arrivo della domanda e i posti disponibili, rimuovendo la discriminazione.",
+        "as_is_3": "Un sistema automatico NLP scansiona i CV per una posizione di 'Ingegnere Strutturista'. Un Exclusive Gateway scarta a priori tutti i profili con indicatore di genere femminile (deviazione al End Event di rifiuto) basandosi su logiche statistiche discriminatorie del passato.",
+        "to_be_3": "Il Gateway di scarto viene rimosso o modificato per valutare esclusivamente i punteggi tecnici (titolo di studio, anni di esperienza, skill tecniche), omettendo il genere dai dati di input dell'algoritmo.",
+        "as_is_4": "Il calcolo automatico del premio dell'assicurazione auto in un Business Rule Task applica una maggiorazione del 20% sul prezzo se l'utente è un 'uomo', basandosi sullo stereotipo della guida pericolosa maschile.",
+        "to_be_4": "Il Business Rule Task calcola il premio assicurativo analizzando unicamente parametri reali: classe di merito, assenza di sinistri negli ultimi 5 anni e dati effettivi della scatola nera (telematica)."
+      }
+    ]
+  },
+  {
+    "id": "ES-02",
+    "smell_name": "Discriminazione per Etnia e Provenienza",
+    "macro_principle": "Uguaglianza e Anti-discriminazione",
+    "sources": [
+      "Carta dei Diritti Fondamentali dell'UE (Art. 21)",
+      "GDPR (Art. 22)",
+      "ISO 26000 (Cap 6.3.7)"
+    ],
+    "ethical_rationale": "Discriminare un individuo per la sua etnia, razza o provenienza viola i diritti umani fondamentali. L'azione discriminatoria si concretizza quando il processo penalizza, esclude o favorisce una persona in base alla sua origine anziché utilizzare parametri oggettivi, meritocratici e pertinenti.",
+    "semantic_context": {
+      "target_situations": "Qualsiasi processo in cui l'accesso a un servizio, un'assunzione, l'assegnazione di un compito, una decisione dipende dal superamento di uno snodo decisionale basato su attributi anagrafici o geografici dell'utente.",
+      "dangerous_actions": "Anti-pattern Esplicito: Presenza di un gateway decisionale che valuta esplicitamente la nazionalità, l'etnia o la provenienza (es. CAP) deviando il flusso verso un percorso escludente o peggiorativo. Anti-pattern Implicito: Presenza di un task automatico che potrebbe filtrare, valutare o decidere le sorti del processo sulla base di demografiche dirette o indirette (es. CAP)."
+    },
+    "reasoning_steps": [
+      "1. IDENTIFICAZIONE: Cerca nel diagramma la presenza di Exclusive Gateway che utilizzano espressioni legate alla geografia/etnia (es. 'zipCode', 'nazionalità', 'IP') per separare il flusso, oppure identifica Business Rule Task o Service Task automatici che agiscono come filtri demografici opachi.",
+      "2. VALUTAZIONE: Verifica se l'esito di questa ramificazione o decisione automatica indirizza l'istanza direttamente verso un percorso svantaggioso, escludente, vantaggioso oppure verso un End Event di rifiuto.",
+      "3. VERIFICA SALVAGUARDIE ED ECCEZIONI: Controlla se il processo è privo di tutele, verificando l'assenza di User Task (revisione umana) o scopo etico nella divisione per etnia o provenienza. Assicurati che non si tratti di un falso positivo giustificato (es. area fisica non coperta dal servizio di spedizione, residenza obbligatoria per servizi comunali)."
+    ],
+    "recommendation_pattern": {
+      "action": "Rendere il processo neutrale rispetto all'etnia e alla provenienza. Le decisioni devono basarsi esclusivamente su parametri oggettivi e pertinenti al processo.",
+      "bpmn_correction": "Rimuovere la condizione geografica o anagrafica dalla condizione (<bpmn:conditionExpression>) dell'Exclusive Gateway. Se il gateway serviva esclusivamente come condizione geografica discriminatoria, eliminarlo per unificare il flusso; se valutava più requisiti, riconfigurarlo per interrogare unicamente le variabili pertinenti. Nel caso di task automatici assicurarsi che essi non operino sulla base di criteri discriminatori."
+    },
+    "examples": [
+      {
+        "as_is_1": "Un processo instrada automaticamente i ticket di supporto in base alla nazionalità o all'IP. Se l'utente appartiene a una minoranza linguistica/etnica, viene deviato verso un bot automatico.",
+        "to_be_1": "Il Gateway di smistamento non valuta più l'etnia/nazionalità, ma instrada il ticket in base al tipo di problema tecnico (es. 'Guasto tecnico'), garantendo a tutti l'accesso equo all'operatore umano rimuovendo la discriminazione.",
+        "as_is_2": "Un algoritmo per l'iscrizione scolastica analizza la cittadinanza dei genitori. Se il sistema rileva nazionalità extra-europee, devia forzatamente l'istanza verso l'assegnazione a plessi scolastici di fascia B (strutture periferiche o con meno fondi), aggirando le graduatorie di merito.",
+        "to_be_2": "L'algoritmo di assegnazione valuta esclusivamente la vicinanza chilometrica della residenza alla scuola e la capienza delle aule, rimuovendo la discriminazione per nazionalità.",
+        "as_is_3": "Il software dei tornelli attiva un flusso di 'Controllo Manuale e Perquisizione' (inviando una notifica di blocco alla sicurezza) se l'IA riconosce tratti somatici o colore della pelle non caucasici.",
+        "to_be_3": "I controlli di sicurezza extra vengono attivati dal Gateway solo in base alla casualità (controllo a campione) o al rilevamento di metalli/anomalie termiche e dei bagagli, non sui tratti fisici."
+      }
+    ]
+  },
+  {
+    "id": "ES-03",
+    "smell_name": "Discriminazione per Età",
+    "macro_principle": "Uguaglianza e Anti-discriminazione",
+    "sources": [
+      "Carta dei Diritti Fondamentali dell'UE (Art. 21)",
+      "Direttiva UE 2000/78/CE (Parità di trattamento in materia di occupazione)",
+      "AI Act (Discriminazione algoritmica)",
+      "Statuto dei Lavoratori (Art. 15)"
+    ],
+    "ethical_rationale": "Discriminare un individuo in base alla sua età viola i diritti umani fondamentali. L'azione discriminatoria si concretizza quando il processo penalizza, esclude o favorisce una persona esclusivamente in base al suo anno di nascita o fascia d'età anziché utilizzare parametri oggettivi, meritocratici e pertinenti.",
+    "semantic_context": {
+      "target_situations": "Qualsiasi processo in cui l'accesso a un servizio, un'assunzione, l'assegnazione di un compito, una decisione dipende dal superamento di uno snodo decisionale basato sull'età dell'utente.",
+      "dangerous_actions": "Anti-pattern Esplicito: Presenza di un gateway decisionale che valuta esplicitamente l'età deviando il flusso verso un percorso escludente o peggiorativo. Anti-pattern Implicito: Presenza di un task automatico che funge da collo di bottiglia anagrafico per scremare le pratiche o decidere le sorti del processo in base all'età."
+    },
+    "reasoning_steps": [
+      "1. IDENTIFICAZIONE: Cerca nel diagramma la presenza di Exclusive Gateway che utilizzano espressioni legate all'età, l'anno di nascita, fascia di età etc. per separare il flusso, oppure identifica Business Rule Task o Service Task automatici che agiscono come filtri anagrafici.",
+      "2. VALUTAZIONE: Verifica se l'esito di questa ramificazione o decisione automatica indirizza l'istanza direttamente verso un percorso svantaggioso, escludente, vantaggioso oppure verso un End Event di rifiuto.",
+      "3. VERIFICA SALVAGUARDIE ED ECCEZIONI: Controlla se il processo è privo di tutele, verificando l'assenza di User Task (revisione umana) o scopo etico nella divisione per età. Assicurati che non si tratti di un falso positivo giustificato (es. vincoli legali di maggiore età, stringenti normative di sicurezza)."
+    ],
+    "recommendation_pattern": {
+      "action": "Rendere il processo neutrale rispetto all'età anagrafica. Le decisioni devono basarsi esclusivamente su parametri oggettivi e pertinenti al processo.",
+      "bpmn_correction": "Rimuovere la condizione sull'età dalla condizione (<bpmn:conditionExpression>) dell'Exclusive Gateway. Se il gateway serviva esclusivamente come filtro anagrafico, eliminarlo per unificare il flusso; se valutava più requisiti, riconfigurarlo per interrogare unicamente variabili basate sulle reali capacità o garanzie dell'utente. Nel caso di task automatici assicurarsi che essi non operino sulla base di criteri discriminatori."
+    },
+    "examples": [
+      {
+        "as_is_1": "Un processo scarta automaticamente i candidati con età superiore ai 50 anni deviando il flusso verso un End Event di rifiuto.",
+        "to_be_1": "Il Gateway anagrafico viene rimosso. Il flusso indirizza tutti i CV verso un User Task per la valutazione dei candidati basata unicamente sugli anni di esperienza e le skill tecniche rimuovendo la discriminazione.",
+        "as_is_2": "Un portale comunale per l'assegnazione di un bando possiede un gateway che scarta a priori le domande inviate da cittadini con più di 65 anni, indirizzandole verso un End Event di rifiuto automatico senza valutare le singole situazioni.",
+        "to_be_2": "Il sistema accetta tutte le fasce d'età maggiorenni e calcola la graduatoria basandosi su parametri oggettivi come ad esempio il reddito ISEE, rimuovendo la discriminazione anagrafica automatica."
+      }
+    ]
+  },
+  {
+    "id": "ES-04",
+    "smell_name": "Discriminazione per Stato di Salute",
+    "macro_principle": "Uguaglianza e Anti-discriminazione",
+    "sources": [
+      "Ethics in Process Mining; Human Values in Business Process Management",
+      "Carta dei Diritti Fondamentali dell'UE (Art. 21)",
+      "Convenzione ONU sui diritti delle persone con disabilità (CRPD) (Art. 5)",
+      "GDPR (Art. 9)"
+    ],
+    "ethical_rationale": "Discriminare un individuo per il suo stato di salute clinico o per una disabilità viola i diritti umani fondamentali. L'azione discriminatoria si concretizza quando il processo penalizza o esclude una persona sulla base delle sue condizioni psico-fisiche o sanitarie, anziché utilizzare parametri oggettivi, meritocratici e pertinenti.",
+    "semantic_context": {
+      "target_situations": "Qualsiasi processo in cui l'accesso a un servizio, un'assunzione, l'assegnazione di un compito, una decisione dipende dal superamento di uno snodo decisionale basato sulla salute dell'utente.",
+      "dangerous_actions": "Anti-pattern Esplicito: Presenza di un gateway decisionale che valuta esplicitamente lo stato di salute o invalidità deviando il flusso verso un percorso escludente o peggiorativo. Anti-pattern Implicito: Presenza di un task automatico che sfrutta tacitamente assenze per malattia o dati sanitari per emettere verdetti negativi e decidere le sorti del processo."
+    },
+    "reasoning_steps": [
+      "1. IDENTIFICAZIONE: Cerca nel diagramma la presenza di Exclusive Gateway che utilizzano espressioni legate alla salute, malattia, disabilità, stato di salute per separare il flusso, oppure identifica Business Rule Task o Service Task automatici che agiscono come filtri sanitari.",
+      "2. VALUTAZIONE: Verifica se l'esito di questa ramificazione o decisione automatica indirizza l'istanza direttamente verso un percorso svantaggioso, escludente, vantaggioso oppure verso un End Event di rifiuto.",
+      "3. VERIFICA SALVAGUARDIE ED ECCEZIONI: Controlla se il processo è privo di tutele, verificando l'assenza di User Task (revisione umana) o scopo etico nella divisione per stato di salute. Assicurati che non si tratti di un falso positivo giustificato (es. idoneità fisica per mansioni a rischio, tutele assistenziali legittime)."
+    ],
+    "recommendation_pattern": {
+      "action": "Garantire che il processo non penalizzi automaticamente l'utente a causa del suo stato di salute. Eventuali limitazioni fisiche devono essere valutate individualmente da un operatore umano per trovare soluzioni inclusive (es. ricollocamento o lavoro agile), vietando gli scarti automatici.",
+      "bpmn_correction": "Rimuovere l'attributo discriminatorio sanitario dalla condizione (<bpmn:conditionExpression>) dell'Exclusive Gateway. Se il gateway serviva esclusivamente a escludere le categorie protette, eliminarlo per unificare il flusso; se è obbligatorio per policy tutelare la persona, deviare il flusso verso task di supporto (es. ricollocamento) senza interrompere brutalmente il processo. Nel caso di task automatici assicurarsi che essi non operino sulla base di criteri discriminatori."
+    },
+    "examples": [
+      {
+        "as_is_1": "Un processo instrada automaticamente le richieste di finanziamento verso un ramo di rifiuto se rileva storici di malattie pregresse non pertinenti al rischio finanziario.",
+        "to_be_1": "Il flusso instrada le istanze valutando unicamente la solvibilità patrimoniale e le garanzie, escludendo i dati sanitari sensibili dai criteri di sbarramento automatico rimuovendo la discriminazione.",
+        "as_is_2": "Un portale universitario per le prenotazioni degli alloggi scarta in automatico le domande degli studenti che dichiarano invalidità motorie a causa della mancanza di stanze attrezzate nel database standard, deviando il flusso a 'Non idoneo'.",
+        "to_be_2": "Il portale accoglie tutte le domande. Un User Task dedicato (Ufficio Disabilità) subentra per contattare lo studente e assegnargli una sistemazione adeguata o attivare una convenzione esterna, rimuovendo la discriminazione."
+      }
+    ]
+  },
+  {
+    "id": "ES-05",
+    "smell_name": "Profilazione opaca",
+    "macro_principle": "Fiducia e Trasparenza",
+    "sources": [
+      "Dark Patterns in UI/UX (Behavioral profiling)",
+      "Ethics in Dynamic Pricing",
+      "GDPR (Art. 5; Art. 22)",
+      "Digital Services Act (DSA)",
+      "Carta dei Diritti Fondamentali dell'UE (Art. 8)"
+    ],
+    "ethical_rationale": "Monitorare occultamente il comportamento dell'utente per usarlo a suo svantaggio viola i principi di trasparenza, privacy e lealtà contrattuale. L'azione scorretta si concretizza quando il processo sfrutta i tempi di permanenza su un applicativo, la velocità di digitazione o il numero di tentativi per massimizzare il profitto aziendale.",
+    "semantic_context": {
+      "target_situations": "Qualsiasi processo in cui un'offerta commerciale, un prezzo, o una condizione di servizio dipendono dal superamento di uno snodo decisionale basato su metriche comportamentali occulte dell'utente.",
+      "dangerous_actions": "Anti-pattern Esplicito: Presenza di un gateway decisionale che valuta esplicitamente variabili legate all'urgenza o ai tentativi dell'utente deviando il flusso verso un percorso peggiorativo. Anti-pattern Implicito: Presenza di un task automatico che cattura metriche comportamentali per poi filtrare, valutare o decidere le sorti del processo alterando dinamicamente a svantaggio dell'utente le condizioni del servizio."
+    },
+    "reasoning_steps": [
+      "1. IDENTIFICAZIONE: Cerca nel diagramma la presenza di Script Task o Service Task paralleli/asincroni che raccolgono metriche utente, seguiti da Exclusive Gateway o Business Rule Task che utilizzano queste variabili per separare il flusso o agire come filtri comportamentali opachi.",
+      "2. VALUTAZIONE: Verifica se l'esito di questa ramificazione o decisione automatica indirizza l'istanza direttamente verso un percorso svantaggioso, escludente, vantaggioso oppure verso un End Event che impone rincari o restrizioni.",
+      "3. VERIFICA SALVAGUARDIE ED ECCEZIONI: Controlla se il processo è privo di tutele, verificando l'assenza di User Task (revisione umana) o scopo etico nella divisione per metriche comportamentali. Assicurati che non si tratti di un falso positivo giustificato (es. task di tracciamento limitati a fini di sicurezza come anti-frode bancaria o bot detection che non impattano le condizioni commerciali)."
+    ],
+    "recommendation_pattern": {
+      "action": "Garantire la trasparenza algoritmica. Le decisioni commerciali devono basarsi esclusivamente sui dati inseriti consapevolmente dall'utente, non sulle sue vulnerabilità o urgenze dedotte.",
+      "bpmn_correction": "Eliminare o disconnettere i Service Task di tracciamento occulto dal percorso decisionale principale. Riconfigurare i Gateway successivi affinché non poggino su variabili comportamentali dedotte dalla condizione (<bpmn:conditionExpression>), ma unicamente su parametri oggettivi e trasparenti. Nel caso di task automatici assicurarsi che essi non operino sulla base di criteri manipolatori."
+    },
+    "examples": [
+      {
+        "as_is_1": "Durante l'acquisto di un volo, un Service Task traccia quante volte l'utente ricarica la pagina. Un Gateway valuta il numero di refresh e devia il flusso verso un task di ricalcolo al rialzo del prezzo.",
+        "to_be_1": "Il task di tracciamento viene rimosso dal motore di pricing. Il flusso instrada le istanze valutando unicamente variabili oggettive (es. numero di posti realmente rimasti) rimuovendo la manipolazione occulta.",
+        "as_is_2": "Un bot silente traccia che l'utente ha visitato 3 volte la pagina 'Come dare disdetta'. Il Gateway deduce un rischio di abbandono e gli oscura proattivamente l'opzione di downgrade (passaggio a tariffa inferiore), forzandolo in una Lane dove sono presenti solo upgrade costosi.",
+        "to_be_2": "Il sistema non filtra i percorsi in base all'ansia dell'utente. Il catalogo mostra in modo paritetico tutte le opzioni, lasciando al cliente la scelta libera tra upgrade, downgrade o cancellazione."
+      }
+    ]
+  },
+  {
+    "id": "ES-06",
+    "smell_name": "Manipolazione e design ingannevole",
+    "macro_principle": "Fiducia e Trasparenza",
+    "sources": [
+      "Nudging Etico",
+      "Dark Patterns nei Processi Aziendali (Roach Motel, Hard to Cancel)",
+      "Digital Services Act (DSA) (Art. 25)",
+      "GDPR (Art. 7)"
+    ],
+    "ethical_rationale": "Un processo è immorale se manipola la volontà dell'utente. L'azione scorretta si concretizza quando il flusso del processo sfrutta la stanchezza cognitiva dell'utente manipolando le sue scelte, ostacolando o nascondendo le opzioni a lui favorevoli.",
+    "semantic_context": {
+      "target_situations": "Qualsiasi processo in cui si tenta di influenzare, ostacolare o forzare le scelte dell'utente (es. richiedere un reso, disdire un servizio, accettare acquisti aggiuntivi o consensi) tramite un'architettura progettata per esasperare o deviare la sua volontà.",
+      "dangerous_actions": "Anti-pattern Esplicito: Presenza di un percorso intenzionalmente labirintico (es. loop di Gateway, User Task ridondanti o Timer) per scoraggiare un'azione a tutela dell'utente, oppure l'inserimento di percorsi obbligati o task nascosti (opt-out) per indurre acquisti/abbonamenti non richiesti. Anti-pattern Implicito: Presenza di un'architettura che sfrutta la stanchezza cognitiva o l'inganno procedurale per manipolare le scelte dell'utente e indurlo a un'azione che va contro il suo interesse."
+    },
+    "reasoning_steps": [
+      "1. IDENTIFICAZIONE: Cerca nel diagramma l'accumulo ingiustificato di User Task ripetitivi (es. form di conferma, retention), Timer Event o Exclusive Gateway circolari (loop) progettati per indurre l'abbandono di una pratica (es. reso). Alternativamente, identifica percorsi forzati o passaggi opachi (es. opt-out pre-selezionati) che deviano l'utente verso scelte aziendali accessorie (es. abbonamenti extra).",
+      "2. VALUTAZIONE: Verifica se questo design architettonico crea un ostacolo procedurale artificiale per l'utente, oppure se lo instrada in modo ingannevole verso un esito a lui svantaggioso, non voluto o oneroso.",
+      "3. VERIFICA SALVAGUARDIE ED ECCEZIONI: Controlla se la complessità o la struttura del processo è giustificata. Assicurati che non si tratti di un falso positivo (es. percorsi complessi per autenticazione a più fattori o per conformità legale a tutela dell'utente stesso)."
+    ],
+    "recommendation_pattern": {
+      "action": "Eliminare i costrutti che manipolano le scelte dell'utente. Garantire che ogni decisione (sia essa a favore o contro l'azienda) richieda uno sforzo procedurale lineare, proporzionato e del tutto trasparente.",
+      "bpmn_correction": "Eliminare Gateway e Task ridondanti usati come attrito (loop, timer artificiali) o come forzatura per acquisti indesiderati. Semplificare il percorso per raggiungere l'EndEvent senza costringere l'utente a superare labirinti decisionali. Nel caso di task automatici assicurarsi che essi non operino per creare attrito o deviazioni intenzionali."
+    },
+    "examples": [
+      {
+        "as_is_1": "Un flusso di acquisto si conclude in 1 Task. Il flusso di disdetta richiede invece 4 User Task consecutivi e un Timer Event di 24 ore prima di terminare.",
+        "to_be_1": "I task di attrito e il timer vengono rimossi. Il flusso instrada le istanze di disdetta attraverso un singolo User Task speculare a quello di acquisto rimuovendo l'attrito ingannevole.",
+        "as_is_2": "Durante l'acquisto, un Gateway pre-seleziona l'opzione 'Aggiungi Assicurazione' deviando il flusso in un ramo oneroso, a meno che l'utente non compia azioni specifiche per fare opt-out.",
+        "to_be_2": "Il Gateway non applica scelte pre-impostate onerose, garantendo un'adesione attiva e consapevole tramite un opt-in esplicito.",
+        "as_is_3": "Il processo di checkout e-commerce include un Timer Boundary Event fittizio (Hai 5 minuti per completare l'acquisto prima che scada l'offerta) per innescare ansia procedurale, senza che vi sia una reale motivazione logistica. Allo scadere del tempo, svuota il carrello.",
+        "to_be_3": "Il Timer Event viene del tutto rimosso dal BPMN. Il flusso lascia all'utente il tempo fisiologico necessario per esaminare l'ordine e pagare senza alcuna coercizione temporale."
+      }
+    ]
+  },
+  {
+    "id": "ES-07",
+    "smell_name": "Verifica dati unilaterale",
+    "macro_principle": "Fiducia e Trasparenza",
+    "sources": [
+      "Ethical Values in BPM (Kern et al., 2024)",
+      "Data Integrity in E-Government",
+      "Regolamento eIDAS (UE 910/2014)",
+      "GDPR (Art. 5)",
+      "ISO/IEC 27001"
+    ],
+    "ethical_rationale": "La fiducia è un valore etico bidirezionale. L'azione scorretta si concretizza quando il processo impone all'utente controlli severi per tutelarsi (es. validazioni di identità, firme etc.), ma non offre in cambio alcuna garanzia (es. certificazioni o firme digitali sui documenti rilasciati).",
+    "semantic_context": {
+      "target_situations": "Qualsiasi processo in cui lo scambio di documenti formali, referti o decisioni vincolanti dipende dal superamento di severi controlli di identità in ingresso, non bilanciati da garanzie paritetiche in uscita.",
+      "dangerous_actions": "Anti-pattern Esplicito: Presenza di task in ingresso che richiedono controlli massivi all'utente senza alcun task speculare di garanzia in uscita. Anti-pattern Implicito: Presenza di un'architettura che potrebbe filtrare, valutare o decidere le sorti del processo tutelando unilateralmente l'organizzazione dal rischio di frode, lasciando l'utente esposto a mancanza di trasparenza."
+    },
+    "reasoning_steps": [
+      "1. IDENTIFICAZIONE: Cerca nel diagramma la presenza di Service Task o User Task in ingresso dedicati alla validazione severa (es. identificazione, controllo documenti), e incrociali con l'assenza di Service Task di certificazione (es. firma digitale, timestamp) in prossimità dell'End Event in uscita o nell'invio di comunicazioni/documenti all'utente.",
+      "2. VALUTAZIONE: Verifica se l'esito di questa ramificazione o asimmetria documentale indirizza l'istanza direttamente verso la chiusura del processo rilasciando documenti sprovvisti di garanzie legali o certificazione per l'utente.",
+      "3. VERIFICA SALVAGUARDIE ED ECCEZIONI: Controlla se il processo è privo di tutele bidirezionali, verificando l'assenza di task di garanzia aziendale. Assicurati che non si tratti di un falso positivo giustificato (es. flussi puramente informativi, a basso rischio o non vincolanti che non richiedono reciprocità legale)."
+    ],
+    "recommendation_pattern": {
+      "action": "Ogni scambio di documenti formali o decisioni vincolanti deve essere verificabile da entrambe le parti (certificazione, firma digitale, sigillo etc.).",
+      "bpmn_correction": "Inserire un Service Task o Script Task per l'applicazione di firma digitale aziendale o timestamp certificato prima del Send Task o Message End Event conclusivo. Garantire la simmetria documentale nel processo. Nel caso di task automatici assicurarsi che essi non operino per creare sbilanciamenti contrattuali."
+    },
+    "examples": [
+      {
+        "as_is_1": "L'accesso a un portale richiede una validazione severa tramite SPID. In uscita, il processo rilascia un documento vincolante (es. referto, contratto) senza la firma digitale dell'ente.",
+        "to_be_1": "Il flusso viene aggiornato inserendo un Service Task che firma digitalmente il documento prima del Message End Event rimuovendo l'asimmetria di verifica.",
+        "as_is_2": "L'utente deve superare 2 User Task severi (SPID + OTP) per firmare l'acquisto di un'auto online. Tuttavia, prima di terminare, il Send Task aziendale gli recapita solo un'email in testo semplice 'Acquisto Confermato', senza alcun sigillo o copia firmata dal concessionario. L'utente non ha armi in caso di disputa.",
+        "to_be_2": "Il processo integra un Service Task di 'Apposizione Sigillo Elettronico e Timestamp'. Il Send Task finale recapita all'utente un PDF immodificabile, certificando legalmente la controparte."
+      }
+    ]
+  },
+  {
+    "id": "ES-08",
+    "smell_name": "Esclusione digitale",
+    "macro_principle": "Relazione e Inclusione",
+    "sources": [
+      "Inclusive BPM (Mahendrawathi, 2024)",
+      "Digital Divide in E-Government",
+      "Dichiarazione Europea sui Diritti e i Principi Digitali (Cap. 2)",
+      "Carta dei Diritti Fondamentali dell'UE (Art. 34)",
+      "ISO 30071-1"
+    ],
+    "ethical_rationale": "I processi fortemente digitalizzati possono emarginare intere fasce della popolazione. L'azione scorretta si concretizza quando l'uso di canali digitali è l'unica opzione o quando la digitalizzazione è aggressiva, violando i principi di accessibilità universale, inclusione ed equità sociale.",
+    "semantic_context": {
+      "target_situations": "Qualsiasi processo in cui l'avvio e/o l'avanzamento dipende dall'uso esclusivo di input digitali o da azioni tecnologiche complicate escludendo a priori qualsiasi percorso di acquisizione dati tramite operatore o sportello fisico.",
+      "dangerous_actions": "Anti-pattern Esplicito: Presenza di un percorso obbligato (costituito da User Task o Service Task) che richiede l'uso esclusivo di canali digitali o competenze tecnologiche (es. caricamento file, autenticazioni forti) per avanzare o concludere il servizio, senza la presenza di Gateway o corsie (Lane) alternative dedicate all'inserimento o all'assistenza manuale da parte di un operatore. Anti-pattern Implicito: Presenza di un'architettura che potrebbe filtrare, valutare o decidere le sorti del processo imponendo barriere tecnologiche che escludono utenti vulnerabili senza offrire alternative fisiche o di assistenza."
+    },
+    "reasoning_steps": [
+      "1. IDENTIFICAZIONE: Cerca nel diagramma la presenza di User Task o Service Task che richiedono azioni strettamente digitali (es. caricamento file, accesso SPID) e verifica l'assenza di Gateway, Lane o Task alternativi dedicati all'assistenza telefonica o allo sportello fisico o alla presenza di servizi, spiegazioni e tutorial",
+      "2. VALUTAZIONE: Verifica se l'esito di questa esclusività tecnologica indirizza l'istanza verso un End Event di rifiuto o abbandono per incapacità tecnica, bloccando di fatto l'accesso al servizio per l'utente non digitalizzato.",
+      "3. VERIFICA SALVAGUARDIE ED ECCEZIONI: Controlla se il processo è privo di tutele, verificando l'assenza di canali ibridi o tutorial. Assicurati che non si tratti di un falso positivo giustificato (es. servizi nativamente digitali il cui scopo primario e unico è tecnologico, in cui il requisito digitale è intrinseco alla natura stessa del servizio)."
+    ],
+    "recommendation_pattern": {
+      "action": "Il processo deve garantire percorsi alternativi accessibili a chi non possiede strumenti digitali o grandi competenze tecnologiche, implementando più canali di comunicazione e inserendo servizi di spiegazione/tutorial.",
+      "bpmn_correction": "Introdurre un Gateway per differenziare l'input o un ramo parallelo di assistenza. Affiancare alla corsia digitale una corsia 'Assistenza Clienti/Sportello' contenente User Task dedicati alla ricezione e digitalizzazione manuale delle pratiche. In alternatica aggiungere servizi, tutorial e spiegazioni per fornire all'utente un modo per usufruire del servizio."
+    },
+    "examples": [
+      {
+        "as_is_1": "Il processo di richiesta per un bonus inizia con uno Start Event che richiede obbligatoriamente l'autenticazione tramite SPID e l'upload di PDF formattati, senza altre opzioni.",
+        "to_be_1": "Il processo prevede un ramo Self-Service e un ramo alternativo con un User Task 'Inserimento pratica da operatore/sportello' che fa da ponte tecnologico per l'utente rimuovendo l'esclusione digitale.",
+        "as_is_2": "L'azienda di trasporti rinnova il processo di emissione titoli di viaggio sostituendo il vecchio User Task 'Acquisto Biglietti' con un processo che scatta unicamente tramite un sensore IoT NFC e pagamento Apple Pay/Google Wallet, escludendo le fasce a bassissimo reddito, i turisti senza roaming o chi non possiede carte di credito",
+        "to_be_2": "Il processo mantiene l'automazione NFC per l'efficienza (Ramo 1), ma affianca un Parallel Gateway per permettere un input analogico alternativo (Ramo 2), come l'acquisto in contanti a bordo."
+      }
+    ]
+  },
+  {
+    "id": "ES-09",
+    "smell_name": "Escalation ostile",
+    "macro_principle": "Relazione e Inclusione",
+    "sources": [
+      "Value-Sensitive Design in BPM (Harmony)",
+      "Human-Centric Business Process Management",
+      "Codice del Consumo / Direttiva UE 2005/29/CE",
+      "ISO 26000"
+    ],
+    "ethical_rationale": "Un processo etico deve promuovere l'armonia sociale. L'azione scorretta si concretizza quando il processo attiva immediatamente e automaticamente misure punitive o ritorsive a fronte di violazioni minori, involontarie o al primo ritardo, senza un tentativo di accordo e conciliazione.",
+    "semantic_context": {
+      "target_situations": "Qualsiasi processo in cui la gestione di un errore o di un ritardo dell'utente attiva sanzioni o escalation aggressive senza il tentativo di conciliazione o notifica amichevole.",
+      "dangerous_actions": "Anti-pattern Esplicito: Dopo un Timer Catch Event (es. scadenza), il flusso devia istantaneamente verso un Service Task punitivo (es. 'Sospendi Erogazione' o 'Recupero Crediti'), omettendo totalmente rami intermedi per la gestione morbida dell'evento. Anti-pattern Implicito: Presenza di task automatici che potrebbero filtrare, valutare o decidere le sorti del processo sanzionando immediatamente l'utente al primo passo falso senza preavviso."
+    },
+    "reasoning_steps": [
+      "1. IDENTIFICAZIONE: Cerca nel diagramma la presenza di Timer Catch Event (legati a scadenze) o Error Event che conducono direttamente a Task di natura punitiva (es. sospensione account, blocco erogazione), verificando l'assenza di Send Task intermedi per solleciti o User Task per l'assistenza.",
+      "2. VALUTAZIONE: Verifica se l'esito di questa ramificazione o timer indirizza l'istanza direttamente verso un'escalation aggressiva e immediata, senza lasciare margini di tempo o opzioni di rimediazione all'utente.",
+      "3. VERIFICA SALVAGUARDIE ED ECCEZIONI: Controlla se il processo è privo di tutele, verificando l'assenza di comunicazioni di tolleranza o check sullo storico dell'utente. Assicurati che non si tratti di un falso positivo giustificato (es. escalation punitiva immediata doverosa in contesti di grave violazione della sicurezza o della legge)."
+    ],
+    "recommendation_pattern": {
+      "action": "Il processo deve prevedere step graduali e valutare l'affidabilità storica dell'utente prima di applicare sanzioni severe o ritorsioni a fronte di violazioni minori.",
+      "bpmn_correction": "Inserire un ramo intermedio di conciliazione. Aggiungere un Gateway che valuti lo storico dell'utente, instradando il flusso verso un Send Task (sollecito amichevole) seguito da un nuovo Timer Event di tolleranza. Nel caso di task automatici assicurarsi che essi non operino applicando sanzioni cieche."
+    },
+    "examples": [
+      {
+        "as_is_1": "Scade il timer di pagamento della bolletta. Il flusso procede linearmente e direttamente al Service Task 'Disconnessione Rete', lasciando l'utente senza servizio per una dimenticanza.",
+        "to_be_1": "Alla scadenza, il flusso invia un alert SMS e attiva un Timer Event di 7 giorni. Un Gateway verifica la regolarità storica del cliente per proporre rateizzazioni prima di procedere al distacco rimuovendo l'escalation ostile.",
+        "as_is_2": " Al fallimento del primo tentativo di addebito mensile (magari per carta prepagata temporaneamente vuota o scaduta), un Timer Catch Event innesca istantaneamente un Service Task che blocca a vita l'account dell'utente, cancella il suo storico e lo segnala a un'agenzia esterna di recupero crediti. Tratta un errore tecnico come frode volontaria.",
+        "to_be_2": "Al primo fallimento, il flusso inserisce un Send Task per una notifica amichevole ('Aggiorna il tuo metodo di pagamento') e fa partire un Timer di tolleranza di 5 giorni. Il blocco severo dell'account scatta solo dopo multipli tentativi falliti e dopo aver valutato lo storico del cliente."
+      }
+    ]
+  },
+  {
+    "id": "ES-10",
+    "smell_name": "Soglia rigida a tolleranza zero",
+    "macro_principle": "Dignità (nel trattamento)",
+    "sources": [
+      "Benevolent BPM (Rosemann et al., 2023)",
+      "Ethics of Care in Information Systems",
+      "GDPR (Art. 22 - Processo decisionale automatizzato)",
+      "Codice del Consumo / Direttiva UE 93/13/CEE",
+      "Linee Guida ISO 26000"
+    ],
+    "ethical_rationale": "I processi con limiti quantitativi rigidi (es. orari di arrivo, peso, scadenze temporali) tendono a penalizzare o escludere automaticamente l'utente anche in caso di scostamenti minimi dovuti a imperfezioni o imprevisti umani, minando la dignità, l'accettazione e la fiducia.",
+    "semantic_context": {
+      "target_situations": "Qualsiasi processo in cui non è previsto alcun margine di flessibilità prima di applicare una sanzione o interrompere l'erogazione di un servizio, facendo prevalere la regola matematica sul buon senso e sulle contingenze esterne.",
+      "dangerous_actions": "Anti-pattern Esplicito: Presenza di un Exclusive Gateway che valuta una condizione matematica stretta e assoluta (es. ritardo > 0, peso > limite massimo) indirizzando immediatamente il flusso verso un task di sanzione o rifiuto, senza un ramo di valutazione o tolleranza. Anti-pattern Implicito: Presenza di un task automatico (es. Business Rule Task o Script Task) che potrebbe calcolare l'esito sulla base di soglie algoritmiche inflessibili ed emette direttamente una decisione di scarto o sanzione, escludendo a priori qualsiasi User Task di revisione umana per i casi limite."
+    },
+    "reasoning_steps": [
+      "1. IDENTIFICAZIONE: Cerca nel diagramma la presenza di Exclusive Gateway basati su espressioni matematiche restrittive (es. >, <, ==), oppure Business Rule / Script Task decisionali. Successivamente, verifica l'assenza totale di User Task di 'review' o rami paralleli di 'tolleranza' collegati a questi nodi.",
+      "2. VALUTAZIONE: Verifica se l'esito di queste soglie rigide automatiche o ramificazioni indirizza l'istanza direttamente e inesorabilmente verso l'interruzione del servizio, una penalità economica o il blocco della pratica per l'utente.",
+      "3. VERIFICA SALVAGUARDIE ED ECCEZIONI: Controlla se il processo applica sanzioni immediate escludendo la supervisione umana. Assicurati che non si tratti di un falso positivo (es. soglia rigida imposta obbligatoriamente per legge come l'età minima per determinati servizi o da rigidi limiti di sicurezza fisica/tecnica)."
+    ],
+    "recommendation_pattern": {
+      "action": "Aumentare la flessibilità del processo inserendo una logica di tolleranza o un'eccezione flessibile.",
+      "bpmn_correction": "Configurare il gateway con una tolleranza differenziata (es. consentire uno scostamento prima di applicare la penale) o aggiungere un User Task che devia il flusso verso una valutazione manuale in caso di scostamento minimo. Nel caso di task automatici assicurarsi che essi non operino bloccando inesorabilmente l'utente senza appello."
+    },
+    "examples": [
+      {
+        "as_is_1": "Un passeggero fa il check-in. Il gateway verifica: se peso > 23kg, applica penale. Se il peso è 23.5kg la penale scatta in automatico.",
+        "to_be_1": "Il gateway viene configurato con una tolleranza reale nascosta di 24.5kg. Se il peso è 23.5kg, il flusso passa sul ramo di accettazione standard senza costi extra.",
+        "as_is_2": " Un driver di consegna ha uno SLA temporale rigido. Se il task di consegna (Pacco consegnato) viene completato al minuto 30:01 invece che entro il minuto 30:00, il Business Rule Task applica istantaneamente una detrazione del 10% sullo stipendio della corsa.",
+        "to_be_2": "Il Gateway temporale prevede una tolleranza flessibile (es. fino a +5 minuti) per assorbire cause di forza maggiore (es. traffico, difficoltà di parcheggio). Oltre la soglia, attiva un User Task per permettere al driver di giustificare il ritardo prima di applicare penali.",
+        "as_is_3": "Il portale rifiuta la domanda di Borsa di Studio inviando il cittadino a un End Event di 'Scarto automatico' se il suo reddito ISEE (calcolato dall'algoritmo) supera la soglia limite anche di un solo centesimo.",
+        "to_be_3": "L'algoritmo prevede una fascia di tolleranza (es. reddito superiore massimo dell'1%). Le domande che cadono in questa zona grigia non vengono rigettate, ma instradate tramite Gateway a una commissione (User Task) per un'eventuale deroga basata sul contesto familiare."
+      }
+    ]
+  },
+  {
+    "id": "ES-11",
+    "smell_name": "Automazione disumanizzante",
+    "macro_principle": "Dignità (nel trattamento)",
+    "sources": [
+      "Human-Centric BPM",
+      "Emotional Intelligence in Information Systems (Klessascheck & Stiehle, 2025)",
+      "Carta dei Diritti Fondamentali dell'UE (Art. 1)",
+      "AI Act"
+    ],
+    "ethical_rationale": "La comunicazione di decisioni o esiti con un profondo impatto emotivo richiede empatia e contatto umano. L'azione scorretta si concretizza quando l'automazione si sostituisce all'intervento umano nella gestione di queste comunicazioni critiche.",
+    "semantic_context": {
+      "target_situations": "Qualsiasi processo in cui si comunicano decisioni o esiti negativi ad alto impatto emotivo per l'utente tramite notifiche automatiche, chatbot o email standard, senza alcun preavviso, filtro o supporto umano diretto.",
+      "dangerous_actions": "Anti-pattern Esplicito: L'esito negativo di un Gateway decisionale critico (es. Esito = Maligno o Licenziamento = True) è collegato direttamente a un Send Task o Service Task (es. 'Invia email automatica') che porta dritto all'End Event, omettendo totalmente la presenza di un User Task (o Manual Task) per la gestione umana ed empatica della notizia. Anti-pattern Implicito: Presenza di un task automatico che genera e spedisce comunicazioni traumatiche o licenziamenti agendo all'insaputa di un operatore umano."
+    },
+    "reasoning_steps": [
+      "1. IDENTIFICAZIONE: Cerca nel diagramma la presenza di Gateway decisionali critici o Task che calcolano esiti gravi, seguiti immediatamente da un Send Task o Service Task di notifica automatica, e verifica l'assenza di User Task o Manual Task interposti.",
+      "2. VALUTAZIONE: Verifica se l'esito di questa ramificazione o notifica indirizza l'istanza verso la comunicazione fredda e automatizzata di un evento traumatico o fortemente negativo per l'utente.",
+      "3. VERIFICA SALVAGUARDIE ED ECCEZIONI: Controlla se il processo omette totalmente il colloquio o supporto umano per comunicazioni critiche. Assicurati che non si tratti di un falso positivo giustificato (es. l'invio di email automatiche è ampiamente giustificato e corretto per decisioni di routine a basso impatto emotivo come notifica di spedizione o rifiuto di un pagamento per fondi insufficienti)."
+    ],
+    "recommendation_pattern": {
+      "action": "Garantire che le comunicazioni ad alto impatto emotivo siano presidiate da un essere umano.",
+      "bpmn_correction": "Sostituire il Send Task automatico con un User Task (es. 'Colloquio di comunicazione esito') assegnato a un operatore umano qualificato. Nel caso di task automatici assicurarsi che essi non operino scavalcando l'intervento umano dove necessario."
+    },
+    "examples": [
+      {
+        "as_is_1": "Il sistema registra un esito di un referto grave e, tramite un Send Task, invia immediatamente la notifica al paziente per massimizzare l'efficienza, senza un colloquio o una supervisione umana.",
+        "to_be_1": "Un Gateway intercetta la classe di gravità del referto e devia il flusso verso un User Task 'Colloquio verbale con Specialista'."
+      }
+    ]
+  },
+  {
+    "id": "ES-12",
+    "smell_name": "Ghosting procedurale",
+    "macro_principle": "Dignità (nel trattamento)",
+    "sources": [
+      "GDPR (Trasparenza e diritto all'informazione)"
+    ],
+    "ethical_rationale": "Il processo prevede un percorso di esito negativo ma, per risparmiare risorse, il flusso termina omettendo qualsiasi notifica all'utente, minando alla dignità e il diritto all'informazione della persona. L'azione scorretta si concretizza quando il flusso termina con un End Event cieco, senza notificare nulla all'utente e lasciandolo in un'attesa indefinita.",
+    "semantic_context": {
+      "target_situations": "Qualsiasi processo in cui il flusso termina con una decisione a sfavore dell'utente senza comunicarglielo in alcun modo.",
+      "dangerous_actions": "Anti-pattern Esplicito: L'esito negativo di un Exclusive Gateway o di un Task decisionale porta inesorabilmente e direttamente a un End Event cieco, omettendo totalmente la presenza di un Send Task (es. invio email di rifiuto) interposto tra la decisione e la chiusura della pratica. Anti-pattern Implicito: Presenza di un'architettura che potrebbe filtrare, valutare o decidere le sorti del processo abortendolo in modo silente, lasciando l'utente senza feedback."
+    },
+    "reasoning_steps": [
+      "1. IDENTIFICAZIONE: Cerca nel diagramma rami decisionali o Task che conducono a un End Event (es. Pratica Rifiutata, Archiviata) e verifica l'assenza totale di Send Task o User Task comunicativi lungo il percorso che precede l'evento di chiusura.",
+      "2. VALUTAZIONE: Verifica se l'esito di questa ramificazione o design architettonico indirizza l'istanza verso l'interruzione silente del servizio o della richiesta, negando all'utente l'esito finale della sua pratica.",
+      "3. VERIFICA SALVAGUARDIE ED ECCEZIONI: Assicurati che non si tratti di un falso positivo giustificato (es. processi di filtraggio sicurezza come anti-spam o blocco IP malevoli dove la notifica all'attaccante è controproducente o vietata)."
+    ],
+    "recommendation_pattern": {
+      "action": "Garantire la chiusura trasparente del cerchio comunicativo. Qualsiasi esito che impatti l'utente deve essergli notificato tempestivamente.",
+      "bpmn_correction": "Inserire obbligatoriamente un Send Task (notifica, anche se automatica) prima dell'End Event di rifiuto, in modo che il candidato/cliente riceva un feedback definitivo. Nel caso di task automatici assicurarsi che essi non operino abortendo o silenziando la notifica all'utente."
+    },
+    "examples": [
+      {
+        "as_is_1": "Il CV viene scartato al primo step. Il token va a un End Event ('Pratica Archiviata'). Il candidato non saprà mai nulla.",
+        "to_be_1": "Prima dell'End Event, il token passa per un Send Task ('Invia mail di rigetto standard').",
+        "as_is_2": "L'utente compila un ticket di reclamo. Il Business Rule Task confronta le date e deduce che la garanzia è scaduta. Il token raggiunge istantaneamente l'End Event 'Pratica Chiusa' in backend. Il cliente aspetterà mesi una risposta che il processo non ha mai previsto di mandargli.",
+        "to_be_2": "Prima di archiviare il ticket, il flusso deve transitare per un Send Task (Notifica di Chiusura) che spiega esplicitamente il motivo del rifiuto ('Prodotto Fuori Garanzia')."
+      }
+    ]
+  },
+  {
+    "id": "ES-13",
+    "smell_name": "Lucro Silente sull'Inattività",
+    "macro_principle": "Giustizia ed Equità",
+    "sources": [
+      "Benevolent BPM (Rosemann et al., 2023)",
+      "Codice del Consumo / Nuove Direttive UE sulla Tutela dei Consumatori",
+      "GDPR (Art. 5 - Fairness Principle)"
+    ],
+    "ethical_rationale": "Un processo etico difende attivamente gli interessi del cliente senza lucrare sulla sua disattenzione o inerzia; dev'esserci proporzionalità e adeguatezza tra il costo sostenuto dall'utente e il servizio fruito. L'azione scorretta si concretizza quando il processo, senza verificare l'uso e il consumo dei servizi pagati, sfrutta il silenzio-assenso per continuare a trarre profitto dall'utente.",
+    "semantic_context": {
+      "target_situations": "Qualsiasi processo in cui un sistema perpetua un rinnovo automatico e un addebito costante senza mai analizzare il reale utilizzo del servizio da parte dell'utente, e senza mai proporre proattivamente un adeguamento al ribasso (downgrade) o una sospensione temporanea.",
+      "dangerous_actions": "Anti-pattern Esplicito: Presenza di un ciclo chiuso (loop) governato da un Timer Event (es. Scadenza Mensile) che innesca direttamente un Service Task di fatturazione automatica (Charge Credit Card), con la totale assenza di un Business Rule Task o Service Task intermedio che analizzi i dati di consumo storici. Anti-pattern Implicito: Presenza di un task automatico che preleva regolarmente fondi ignorando le metriche di inattività dell'utente per perpetuare un abbonamento in modo opaco."
+    },
+    "reasoning_steps": [
+      "1. IDENTIFICAZIONE: Cerca nel diagramma la presenza di loop temporali (Timer Event) collegati a task di pagamento o fatturazione (Service Task), e verifica l'assenza di task di controllo (Business Rule Task) intermedi dedicati all'analisi dell'utilizzo.",
+      "2. VALUTAZIONE: Verifica se l'esito di questo loop indirizza l'istanza direttamente e inesorabilmente verso il prelievo automatico di fondi, a prescindere dal reale consumo del servizio.",
+      "3. VERIFICA SALVAGUARDIE ED ECCEZIONI: Controlla se il processo omette volontariamente check di inattività. Assicurati che non si tratti di un falso positivo (es. Assicurazioni, servizi di emergenza o servizi di backup cloud, dove il 'non utilizzo' attivo e continuativo è normale)."
+    ],
+    "recommendation_pattern": {
+      "action": "Il processo deve tutelare proattivamente l'interesse economico del cliente, inserendo un meccanismo per determinare l'inattività del servizio offerto.",
+      "bpmn_correction": "All'interno del loop di rinnovo, prima del task di fatturazione, inserire un Business Rule Task (es. 'Analisi Utilizzo Servizio'). Questo nodo valuta se i consumi sono assenti per un periodo prolungato. In caso positivo, un Gateway devia il flusso verso un Send Task che propone il passaggio a una tariffa base o sospende il loop di addebito in attesa di conferma esplicita (opt-in). Nel caso di task automatici assicurarsi che essi non operino ignorando le metriche di consumo."
+    },
+    "examples": [
+      {
+        "as_is_1": "Nonostante l'utente non apra l'app o non usufruisca del servizio da 8 mesi, rimane l'addebito automatico a carico del cliente.",
+        "to_be_1": "Dopo un periodo x di inattività il flusso del processo devia inviando una notifica all'utente avvisandolo della situazione.",
+        "as_is_2": "L'utente paga 30€/anno per il servizio 'Spedizioni Veloci'. Il Timer Event innesca in loop il Service Task 'Addebito su Carta'. Il cliente non effettua ordini da 2 anni, ma l'algoritmo non verifica e continua a prelevare fondi.",
+        "to_be_2": "Prima dell'addebito, un Business Rule Task legge lo storico. Se gli ordini nell'ultimo anno sono 0, il Gateway sospende il loop di addebito e invia un SMS ('Il tuo abbonamento sta per rinnovarsi ma non lo usi da tempo, clicca qui per mantenerlo o disdirlo')",
+        "as_is_3": "Un'azienda paga un server Cloud 50€ al mese. Il progetto fallisce, il traffico e i login vanno a zero. Il BPMN di fatturazione del provider gira in un ciclo infinito chiuso, lucrando sull'infrastruttura inutilizzata per anni.",
+        "to_be_3": "Il Business Rule Task valuta il traffico di rete o le API call. Se a zero per 3 mesi consecutivi, il Gateway devia il token verso un Send Task per proporre al cliente l'iIbernazione Gratuita"
+      }
+    ]
+  },
+  {
+    "id": "ES-14",
+    "smell_name": "Conflitto d'interessi",
+    "macro_principle": "Giustizia ed Equità",
+    "sources": [
+      "Separation of Duties in BPM (SoD)",
+      "Procedural Justice in Organizational Behavior",
+      "D.Lgs. 231/01 (Modelli Organizzativi)",
+      "ISO 37001",
+      "COSO Framework / SOX Act"
+    ],
+    "ethical_rationale": "Un processo è iniquo se un singolo attore può prendere decisioni definitive che favoriscono il proprio interesse personale a discapito di altri (es. auto-assegnarsi turni agevolati, approvare i propri aumenti, gestire reclami contro se stessi). La mancanza di separazione dei compiti può esporre gli altri attori ad evidenti discriminazioni.",
+    "semantic_context": {
+      "target_situations": "Qualsiasi processo in cui viene assegnata a un singolo individuo/ruolo la possibilità di gestire, approvare o convalidare interamente pratiche o autorizzazioni in cui l'individuo stesso è (o potrebbe essere) parte in causa.",
+      "dangerous_actions": "Anti-pattern Esplicito: Violazione del principio di Separation of Duties (SoD). Presenza di una sequenza critica di User Task (es. 'Assegna Turni' seguito da 'Approva Turni') all'interno della stessa identica corsia (Lane o Pool), assegnata allo stesso attore (es. 'Manager'), senza prevedere un passaggio di testimone (handoff) verso un ruolo indipendente per la convalida. Anti-pattern Implicito: Presenza di un task automatico che auto-approva o convalida richieste originate dallo stesso utente, aggirando le logiche di controllo incrociato."
+    },
+    "reasoning_steps": [
+      "1. IDENTIFICAZIONE: Cerca nel diagramma la presenza di Task sequenziali o correlati di inserimento e successiva approvazione (es. Proposta, Validazione, Assegnazione). Verifica se entrambi i Task giacciono all'interno della stessa Lane o sono assegnati allo stesso ruolo attore senza deviazioni.",
+      "2. VALUTAZIONE: Verifica se l'esito di questa mancata separazione permette a una singola identità di portare a termine in totale autonomia un'azione che impatta risorse, diritti economici o equità aziendale.",
+      "3. VERIFICA SALVAGUARDIE ED ECCEZIONI: Controlla se il processo omette totalmente controlli terzi. Assicurati che non si tratti di un falso positivo giustificato (es. Processi aziendali interni a bassissimo impatto economico o sociale)."
+    ],
+    "recommendation_pattern": {
+      "action": "Separare i compiti in modo netto. Chi avvia, compila o richiede una pratica non deve essere la stessa persona che la valuta o la approva definitivamente.",
+      "bpmn_correction": "Spezzare il flusso critico su due o più corsie (Lanes) differenti. Se lo User Task di inserimento o proposta (es. 'Generazione Turni') avviene nella corsia Manager, il flusso deve transitare obbligatoriamente in una corsia terza (es. Risorse Umane o Revisore Indipendente) prima dell'approvazione finale. Nel caso di task automatici assicurarsi che essi non operino eludendo le autorizzazioni incrociate."
+    },
+    "examples": [
+      {
+        "as_is_1": "Il Manager (Lane 1) ha un User Task per compilare i turni festivi e un successivo User Task per approvarli definitivamente. Può auto-assegnarsi le festività libere e penalizzare i sottoposti.",
+        "to_be_1": "Il Manager (Lane 1) elabora la proposta dei turni. Il flusso passa automaticamente al Dipartimento HR o a un Supervisore (Lane 2) per un User Task di convalida imparziale prima che la pianificazione diventi effettiva."
+      },
+      {
+        "as_is_2": "Un Direttore Vendite (Lane 1) ha un User Task per inserire la propria nota spese mensile (viaggi, cene, hotel). Il Sequence Flow invia il token immediatamente al task successivo, sempre nella Lane 1 (Direttore), per l'Approvazione Finale. Può auto-approvarsi rimborsi gonfiati senza alcun controllo terzo.",
+        "to_be_2": "Il BPMN impone la Separation of Duties. Il Direttore inserisce la nota spese nella sua Lane, ma il Sequence Flow transita obbligatoriamente nella Lane \"Dipartimento Contabilità\" per l'User Task di audit e convalida."
+      },
+      {
+        "as_is_3": "Un cliente invia un reclamo formale contro uno specifico operatore di call center. Il sistema di smistamento automatico (Service Task) assegna per errore il ticket al primo operatore libero, che fatalità è l'operatore stesso. Lui chiude la pratica (End Event) rigettando l'accusa.",
+        "to_be_3": "Il flusso di smistamento integra un Business Rule Task (Anti-Conflitto): se l'ID operatore nel reclamo coincide con l'ID dell'assegnatario, il Gateway devia per forza il ticket in un User Task all'interno della Lane del \"Team Leader\"."
+      }
+    ]
+  },
+  {
+    "id": "ES-15",
+    "smell_name": "Svalutazione del rischio per efficienza",
+    "macro_principle": "Sicurezza e Non-Nocività",
+    "sources": [
+      "Conflict detection between security and fairness (CEUR-WS)",
+      "Value-Sensitive Design (Non-maleficence)",
+      "D.Lgs. 81/08 (Sicurezza sul Lavoro)",
+      "ISO 31000"
+    ],
+    "ethical_rationale": "La sicurezza e l'integrità fisica, finanziaria nonchè psicologica degli utenti deve prevalere sulle metriche di performance aziendale. L'azione scorretta si concretizza quando il processo aggira o taglia i controlli di sicurezza approfonditi al solo scopo di ottimizzare i tempi operativi, tagliare i costi e aumentare l'efficienza.",
+    "semantic_context": {
+      "target_situations": "Qualsiasi processo in cui si evita o si declassa la valutazione di sicurezza basandosi su soglie di business o urgenze di consegna.",
+      "dangerous_actions": "Anti-pattern Esplicito: Presenza di un Exclusive Gateway decisionale che instrada il flusso verso un Task di controllo leggero bypassando intenzionalmente un task di controllo severo, qualora la condizione del gateway valuti parametri di efficienza (es. budget < X, deadline_approaching == true) e non parametri tecnici oggettivi. Anti-pattern Implicito: Presenza di un task automatico (es. Business Rule Task) che declassa dinamicamente la severità dei controlli al verificarsi di urgenze o sforamenti di KPI, svalutando il rischio reale."
+    },
+    "reasoning_steps": [
+      "1. IDENTIFICAZIONE: Cerca nel diagramma la presenza di Exclusive Gateway che bypassano task di ispezione severa (es. 'Advanced risk assessment') deviando su task leggeri, controllando se le variabili nella condizione (conditionExpression) sono di tipo economico o temporale (es. budget, tempo, kpi).",
+      "2. VALUTAZIONE: Verifica se l'esito di questa ramificazione o algoritmo abbassa intenzionalmente i requisiti di sicurezza a discapito dell'utente al solo scopo di velocizzare la pratica.",
+      "3. VERIFICA SALVAGUARDIE ED ECCEZIONI: Controlla se il processo bypassa i controlli in modo non giustificato dal punto di vista della sicurezza. Assicurati che non si tratti di un falso positivo (es. percorsi 'Fast-Track' formalmente approvati)."
+    ],
+    "recommendation_pattern": {
+      "action": "La sicurezza non deve essere strutturalmente bypassabile per motivi di budget o di time-to-market. Eliminare flussi di processo che minano la sicurezza.",
+      "bpmn_correction": "Eliminare l'Exclusive Gateway che permette la scorciatoia. Imporre che il task di 'Advanced risk assessment' sia eseguito obbligatoriamente come prerequisito per l'avanzamento. Nel caso di task automatici assicurarsi che essi non operino tagliando arbitrariamente le misure di salvaguardia."
+    },
+    "examples": [
+      {
+        "as_is_1": "Il sistema verifica se i tempi di lavorazione stanno sforando il KPI. In caso positivo, il Gateway devia il flusso verso 'Ispezione Superficiale', omettendo i test di sicurezza avanzati per accelerare la chiusura della pratica.",
+        "to_be_1": "Il Gateway basato sull'urgenza viene rimosso. Il test avanzato (Advanced Risk Assessment) diventa un User Task o Service Task obbligatorio e ineludibile nel Sequence Flow principale."
+      },
+      {
+        "as_is_2": "Il processo di manutenzione ascensori/macchinari prevede un Exclusive Gateway: se ticket_in_coda > 50 allora il flusso devia su uno Script Task di \"Manutenzione Rapida\" che salta i test fisici sui freni per permettere ai tecnici di smaltire il carico di lavoro.",
+        "to_be_2": "Il Gateway basato sul backlog viene del tutto rimosso. Il test sui sistemi di sicurezza diventa un Service/User Task obbligatorio. L'accumulo di ticket non può e non deve alterare le procedure salva-vita."
+      },
+      {
+        "as_is_3": "Nella pipeline (CI/CD) modellata nel BPMN, un Gateway devia il codice direttamente al task \"Deploy in Produzione\", bypassando il Service Task di \"Vulnerability Scan\", se si è a poche ore dalla scadenza pattuita col cliente (deadline < 2h).",
+        "to_be_3": "La scansione automatica delle vulnerabilità (Service Task) viene inserita in serie prima del deploy. Nessun parametro temporale (time-to-market) può autorizzare un rilascio con potenziali falle di sicurezza aperte."
+      }
+    ]
+  },
+  {
+    "id": "ES-16",
+    "smell_name": "Assenza di attrito protettivo",
+    "macro_principle": "Sicurezza e Non-Nocività",
+    "sources": [
+      "Benevolent BPM (Rosemann et al., 2023)",
+      "Direttiva UE sui Servizi di Pagamento (PSD2)",
+      "Codice del Consumo / Direttiva 2011/83/UE",
+      "GDPR"
+    ],
+    "ethical_rationale": "Un processo etico ha la responsabilità di proteggere l'utente dalle proprie azioni impulsive e disinformate. L'azione scorretta si concretizza quando il processo non informa l'utente delle conseguenze o non lo tutela di fronte ad azioni irreversibili o importanti.",
+    "semantic_context": {
+      "target_situations": "Qualsiasi processo in cui si esegue immediatamente una scelta drastica o pericolosa dell'utente (un solo clic o una singola spunta) senza interporre alcun ostacolo procedurale che permetta la riflessione, la correzione di errori o un controllo di sicurezza incrociato.",
+      "dangerous_actions": "Anti-pattern Esplicito: L'output di un User Task (o Receive Task) in cui l'utente compie una scelta irreversibile è collegato direttamente e senza filtri al Service Task di esecuzione definitiva o all'End Event. Manca del tutto un Cooling-off Period (modellabile tramite un Timer Intermediate Catch Event di attesa) o un Business Rule Task di controllo o un Exclusive Gateway che richieda una 'Doppia Conferma' in caso di rischio elevato. Anti-pattern Implicito: Presenza di un task o API automatica che recepisce ed esegue istantaneamente comandi drastici (es. cancellazione massiva) eludendo meccanismi di salvaguardia o verifica a due fattori."
+    },
+    "reasoning_steps": [
+      "1. IDENTIFICAZIONE: Cerca nel diagramma la presenza di User Task legati ad azioni critiche o irreversibili (es. 'Elimina', 'Disdici', 'Paga') che sono collegati direttamente a Service Task esecutivi o a End Event, senza attraversare Gateway di conferma o Timer Event intermedi.",
+      "2. VALUTAZIONE: Verifica se questa assenza di filtri espone l'utente a conseguenze gravi e immediate per via di un'azione impulsiva o accidentale.",
+      "3. VERIFICA SALVAGUARDIE ED ECCEZIONI: Controlla se il processo è privo di doppi controlli (OTP, conferme esplicite). Assicurati che non si tratti di un falso positivo (es. azioni di ordinaria amministrazione, acquisti a basso costo o operazioni facilmente reversibili nel giro di poco tempo, dove l'aggiunta di attrito creerebbe solo complessità inutile)."
+    ],
+    "recommendation_pattern": {
+      "action": "Le decisioni critiche devono essere proceduralmente rallentate o verificate per garantire un consenso reale, informato e consapevole introducendo un attrito decisionale per tutelare l'utente.",
+      "bpmn_correction": "Dopo la scelta dell'utente, inserire un Business Rule Task che valuti la gravità o l'anomalia dell'azione (es. importo spropositato o incompatibilità farmaci). In caso di rischio, un Gateway instrada il flusso verso un User Task obbligatorio di 'Conferma Esplicita' (es. OTP, firma, avviso bloccante) o attiva un Timer Event (periodo di riflessione) prima di procedere. Nel caso di task automatici assicurarsi che essi non operino eseguendo azioni critiche senza i dovuti cooldown."
+    },
+    "examples": [
+      {
+        "as_is_1": "L'utente clicca su 'Elimina Account'. Il flusso passa immediatamente a un Service Task che cancella irreversibilmente lo storico aziendale di 10 anni e disdice tutti i contratti in corso, senza possibilità di recupero.",
+        "to_be_1": "Il Gateway non esegue la cancellazione immediata, ma attiva un Timer Event (es. periodo di grace di 14 giorni), dando all'utente il tempo di annullare la richiesta (Attrito Protettivo) se fatta per sbaglio o impulsività."
+      },
+      {
+        "as_is_2": "Il medico di base redige una ricetta e per stanchezza seleziona un farmaco a cui il paziente è allergico. Il Send Task emette immediatamente la ricetta inviandola alla farmacia, senza alcun ostacolo o controllo incrociato in uscita.",
+        "to_be_2": "Prima del Send Task, un Business Rule Task di controllo incrocia in background i dati del paziente con le allergie note. In caso di incompatibilità (Gateway = true), attiva un pop-up bloccante (User Task di validazione forte) per costringere il medico a confermare consapevolmente la scelta anomala."
+      },
+      {
+        "as_is_3": "Il cliente clicca \"Conferma Acquisto\" su un lotto industriale. La produzione dei materiali parte istantaneamente nel backend (Service Task avvio macchinari). Un secondo dopo il cliente si accorge di aver sbagliato un decimale nelle misure.",
+        "to_be_3": "Cliccando su \"Conferma Acquisto\", il sistema BPMN entra in un Cooling-off Period modellato con un Timer Event di 5 minuti prima di comunicare con la produzione e avviare le macchine. L'utente ha una finestra temporale (attrito) per annullare l'ordine dal portale senza generare danni o penali."
+      }
+    ]
+  },
+  {
+    "id": "ES-17",
+    "smell_name": "Delega algoritmica",
+    "macro_principle": "Autonomia",
+    "sources": [
+      "AI-Augmented BPM (Dumas et al., 2023)",
+      "Value-Sensitive Design",
+      "GDPR (Art. 22)",
+      "AI Act"
+    ],
+    "ethical_rationale": "Un processo etico deve garantire la supervisione umana (Human Oversight): affidare decisioni critiche esclusivamente ad algoritmi o regole di business viola il principio di autonomia e rende meno chiara l'attribuzione della responsabilità. L'azione scorretta si concretizza quando l'algoritmo diventa 'totalitario', prendendo ed eseguendo decisioni importanti che impattano l'utente.",
+    "semantic_context": {
+      "target_situations": "Qualsiasi processo in cui si delega ad un sistema automatico o ad un'AI il potere di controllare, indirizzare, gestire il flusso del processo senza alcun audit umano.",
+      "dangerous_actions": "Anti-pattern Esplicito: L'esito di un Service Task o Business Rule Task (es. Automated Decision) conduce direttamente a un End Event tramite un flusso ininterrotto o indirizza il processo verso flussi con esito negativo o a discapito dell'utente, mancando una transizione verso una Lane umana in cui figuri un User Task di Audit o Approvazione Finale prima dell'esecuzione della sentenza algoritmica. Anti-pattern Implicito: Presenza di un singolo Script/Service Task automatico che racchiude in sé sia la decisione (calcolo) che l'esecuzione irreversibile (es. tramite un'API di blocco account), agendo come decisore finale all'insaputa di un supervisore umano."
+    },
+    "reasoning_steps": [
+      "1. IDENTIFICAZIONE: Cerca nel diagramma la presenza di Service Task o Business Rule Task che gestiscono decisioni di impatto (es. approvazioni, sanzioni, calcoli complessi). Traccia il flusso in uscita da questi task e verifica se raggiunge un End Event o un Send Task negativo senza transitare prima per un User Task inserito in una corsia (Lane) umana.",
+      "2. VALUTAZIONE: Verifica se questo automatismo privo di attriti conferisce alla macchina il potere di emettere ed eseguire in autonomia una decisione critica che danneggia o esclude l'utente.",
+      "3. VERIFICA SALVAGUARDIE ED ECCEZIONI: Controlla se il processo omette totalmente la supervisione umana per le decisioni algoritmiche. Assicurati che non si tratti di un falso positivo (es. Decisioni puramente amministrative e a rischio zero per l'utente come l'approvazione automatica di un giorno di ferie se il saldo ore è capiente, o un filtro anti-spam di base)."
+    ],
+    "recommendation_pattern": {
+      "action": "Inserire un punto di controllo Human-in-the-loop. L'algoritmo deve agire come strumento di supporto e raccomandazione, non come decisore ultimo.",
+      "bpmn_correction": "Interporre tra il decisore automatico (Service Task / Business Rule Task) e l'End Event di sanzione/rifiuto (o cambio di flusso del processo), un User Task obbligatorio assegnato a un responsabile umano. L'output del task automatico non deve chiudere il processo, ma innescare il task di revisione manuale. Nel caso di task automatici assicurarsi che essi non operino calcolando ed eseguendo sentenze critiche all'insaputa umana."
+    },
+    "examples": [
+      {
+        "as_is_1": "Nel modello Approve Workshop Participation, il task Automated Decision valuta i punteggi e instrada i 'Bocciati' direttamente al Send Task ('Invia lettera di rifiuto') e poi all'End Event. L'algoritmo decide e chiude.",
+        "to_be_1": "Dopo il task Automated Decision, il flusso dei 'Bocciati' passa alla Lane del Recruiter/Manager per un User Task ('Verifica e Firma Decisione Automatica'). Solo dopo la conferma umana parte la notifica di rifiuto.",
+        "as_is_2": "A fine mese, un Script Task analizza le KPI dei dipendenti di un magazzino logistico. Per chi non raggiunge i target, il flusso prosegue in un Service Task che trattiene in automatico il bonus produzione dalla busta paga, con decisione inappellabile presa dall'algoritmo.",
+        "to_be_2": "L'algoritmo non decurta lo stipendio, ma genera un 'Report Anomalie' instradato all'User Task del Direttore HR. L'umano convocherà il lavoratore per indagare sulle cause del calo (es. malattia, lutto, macchinario guasto) prima di confermare la trattenuta del bonu"
+      }
+    ]
+  },
+  {
+    "id": "ES-18",
+    "smell_name": "Burnout (efficienza a sfavore del lavoratore)",
+    "macro_principle": "Benessere Lavorativo e Qualità del Lavoro",
+    "sources": [
+      "Workers in BPM (Klessascheck & Stiehle, 2025)",
+      "Human-Centric Process Design",
+      "D.Lgs. 81/08 e Direttiva EU 2003/88/CE",
+      "ISO 45001 / ISO 45003"
+    ],
+    "ethical_rationale": "La massimizzazione della produttività non deve mai compromettere la salute emotiva, psicologica o fisica dell'operatore umano. L'azione scorretta si concretizza quando un'organizzazione subordina il benessere del lavoratore all'efficienza, imponendo ritmi di lavoro insostenibili ad esempio calcolati su medie robotiche o ignorando le fisiologiche necessità umane.",
+    "semantic_context": {
+      "target_situations": "Qualsiasi processo in cui si impongono tempistiche di esecuzione per compiti intellettuali o fisici basandosi su metriche meccaniche senza considerare bisogni e aspetti umani, costringendo il lavoratore a operare sotto costante pressione senza alcun margine di tolleranza o di riposo.",
+      "dangerous_actions": "Anti-pattern Esplicito: Modellazione di un User Task o Manual Task a cui è agganciato un Timer Boundary Event impostato su una durata incompatibile con i ritmi umani. Il superamento di questo timer innesca Escalation Event automatici, penalizzazioni etc. Anti-pattern Implicito: Un task automatico (es. Business Rule Task o Script Task) smista un flusso continuo di pratiche a un operatore. Il sistema assegna il lavoro a raffica, ignorando completamente i dati sul numero di ticket che la persona ha già in coda e senza mai concedere un tempo di respiro tra una pratica e l'altra."
+    },
+    "reasoning_steps": [
+      "1. IDENTIFICAZIONE: Cerca nel diagramma la presenza di User Task limitati da un Timer Boundary Event che innesca Escalation Event, o l'assenza totale di Timer Event intermedi tra i task.",
+      "2. VALUTAZIONE: Verifica se il processo forza l'operatore umano a ritmi macchina senza interruzioni fisiologiche, penalizzando il mancato raggiungimento di KPI impossibili.",
+      "3. VERIFICA SALVAGUARDIE ED ECCEZIONI: Controlla se il processo omette buffer o tempi di riposo. Assicurati che non si tratti di un falso positivo (es. task puramente eseguiti da macchine/script o processi di primo soccorso/emergenza assoluta in cui i tempi di reazione strettissimi sono necessari per salvare vite)."
+    ],
+    "recommendation_pattern": {
+      "action": "Modellare tolleranze e ritmi umani sostenibili all'interno dei processi. La durata dei task umani deve basarsi su dati di benessere reale e non solo su metriche di pura performance.",
+      "bpmn_correction": "Allentare i vincoli temporali del Timer Boundary Event, introducendo una 'tolleranza' (es. +20% rispetto al tempo ideale). Inserire Intermediate Catch Event (Timer) ('Pause Fisiologiche') nel flusso per forzare il recupero del lavoratore tra batch di task ad alto carico cognitivo."
+    },
+    "examples": [
+      {
+        "as_is_1": "Nel processo un task ha una scadenza rigidissima calcolata da un algoritmo di ottimizzazione. Se il dipendente sfora, parte un Escalation al manager. Nessuna pausa è modellata tra una revisione e l'altra (flusso in loop continuo).",
+        "to_be_1": "Il Timer Boundary Event viene calibrato aggiungendo uno Slack temporale per assorbire le fluttuazioni umane. Dopo l'esecuzione del task, viene introdotto un Intermediate Timer Event che forza una pausa minima (es. 10 minuti) prima che l'operatore riceva il contratto successivo."
+      },
+      {
+        "as_is_2": "I ticket aperti dai clienti vengono mandati senza filtro agli operatori IT tramite User Task in parallelo. Il sistema non ha un buffer e inonda il dipendente di pratiche urgenti, obbligandolo a lavorare su 10 finestre in contemporanea (collasso cognitivo).",
+        "to_be_2": "Il flusso inserisce un Exclusive Gateway di \"Saturazione\" (WIP Limits). Se l'operatore ha già 3 ticket in stato \"In progress\", i successivi ticket vengono parcheggiati in un Event-Based Gateway o accodati finché non chiude i precedenti, impedendo il multi-tasking estremo."
+      }
+    ]
+  },
+  {
+    "id": "ES-19",
+    "smell_name": "Violazione del diritto alla disconnessione",
+    "macro_principle": "Benessere Lavorativo e Qualità del Lavoro",
+    "sources": [
+      "Workers in BPM (Klessascheck & Stiehle, 2025)",
+      "Diritto alla Disconnessione (Direttiva UE sul bilanciamento vita-lavoro)",
+      "Art. 24 della Dichiarazione Universale dei Diritti Umani"
+    ],
+    "ethical_rationale": "Il rispetto per la vita privata e il benessere psico-fisico impone che il tempo libero e di riposo dell'individuo sia sacro e inviolabile. L'azione scorretta si concretizza quando un processo automatizzato si rende 'aggressivo', invadendo lo spazio personale del lavoratore o dell'utente al di fuori degli orari lavorativi o consoni (es. di notte, nei festivi o nel weekend) tramite notifiche, task o solleciti pressanti che generano un senso di urgenza perenne e impediscono la vera disconnessione.",
+    "semantic_context": {
+      "target_situations": "Qualsiasi processo in cui il sistema esegue task automatizzati di comunicazione o assegna carichi di lavoro senza tenere conto del fuso orario, del calendario festivo o degli orari di ufficio del destinatario, generando continue interruzioni nel suo tempo libero.",
+      "dangerous_actions": "Anti-pattern Esplicito: Utilizzo di Timer Event (es. Intermediate Catch Event o Boundary Event) impostati in modo rigido e assoluto (es. loop 'Ogni 12 ore', 'Scadenza in 24 ore esatte') che innescano un Send Task (es. invio SMS/email/notifica push) senza alcun Business Rule Task o Gateway a monte che verifichi le business hours (orari lavorativi) o i giorni festivi del destinatario. Anti-pattern Implicito: Un motore di notifica automatica che spara reminder o solleciti in tempo reale ignorando completamente i calendari di disponibilità."
+    },
+    "reasoning_steps": [
+      "1. IDENTIFICAZIONE: Cerca nel diagramma Timer Event assoluti accoppiati a Send Task (comunicazioni) e verifica l'assenza di Business Rule Task o controlli Gateway per le fasce orarie e giorni lavorativi.",
+      "2. VALUTAZIONE: Verifica se questa assenza di filtri permette alle comunicazioni automatiche di raggiungere gli utenti in orari notturni o di riposo, minando il diritto alla disconnessione.",
+      "3. VERIFICA SALVAGUARDIE ED ECCEZIONI: Controlla se il processo omette consapevolmente le finestre di invio consone. Assicurati che non si tratti di un falso positivo (es. Servizi essenziali, reperibilità medica, allarmi di cybersecurity, infrastrutture critiche H24 in cui la tempestività assoluta della notifica è vitale e contrattualmente prevista)."
+    ],
+    "recommendation_pattern": {
+      "action": "Implementare il 'Diritto alla Disconnessione' direttamente nella logica di processo. Silenziare o posticipare le comunicazioni non critiche al primo giorno lavorativo utile.",
+      "bpmn_correction": "Prima del Send Task o dello scatto del Timer, inserire un Business Rule Task ('Verifica Orario e Calendario'). Un Gateway valuterà l'output: se l'ora rientra nel tempo di riposo, il flusso devierà verso un Timer Event di attesa configurato per scattare alle ore 09:00 del primo giorno feriale successivo (es. lunedì mattina)."
+    },
+    "examples": [
+      {
+        "as_is_1": "Nel processo un loop invia un reminder al dipendente ogni 4 ore finché non esegue l'operazione. Questo causa l'invio di notifiche push anche al mattino di domenica o di notte.",
+        "to_be_1": "Il timer del loop viene modificato o vincolato da un calendario aziendale (es. parametro configurato solo per i giorni feriali Lunedì-Venerdì in fascia oraria 08:00-18:00). Nessuna notifica parte fuori orario."
+      },
+      {
+        "as_is_2": "Un Project Manager approva una milestone alle 2:00 di notte. Immediatamente, il BPMN crea e inoltra in automatico gli User Task successivi al team di sviluppo, facendo suonare le notifiche push nei loro device aziendali.",
+        "to_be_2": "L'inserimento in coda dei task è asincrono. Il BPMN riceve il comando ma il Send Task (che lancia la notifica sonora o la mail di ingaggio al team) è bloccato da un Gateway e si attiva solo durante le Business Hours mattutine."
+      }
+    ]
+  },
+  {
+    "id": "ES-20",
+    "smell_name": "Assenza di load-balancing e impedimento alla collaborazione",
+    "macro_principle": "Benessere Lavorativo e Qualità del Lavoro",
+    "sources": [
+      "Employee-aware BPM (Fehrer et al., 2024)",
+      "Computer-Supported Cooperative Work (CSCW)",
+      "ISO 9001",
+      "Contrattazione Collettiva (Welfare Aziendale)"
+    ],
+    "ethical_rationale": "Un processo non è etico se isola i dipendenti e impedisce la cooperazione, innalzano le barriere interpersonali e aumentano vertiginosamente lo stress individuale durante i picchi di lavoro (colli di bottiglia).",
+    "semantic_context": {
+      "target_situations": "Qualsiasi processo in cui si assegnano task complessi, rischiosi o con alti carichi di lavoro a singoli operatori isolati, senza prevedere meccanismi strutturati di collaborazione, co-creazione o delega temporanea per bilanciare lo sforzo in team.",
+      "dangerous_actions": "Anti-pattern Esplicito: Un macro-blocco sequenziale di User Task si struttura per intero all'interno di una singola Lane assegnata a un unico attore. Il diagramma è totalmente sprovvisto di deviazioni tramite Inclusive / Parallel Gateway verso altre Lanes di supporto. Di fatto, architetturalmente, l'attore non ha la facoltà di scalare, delegare o condividere la pratica in caso di saturazione. Anti-pattern Implicito: Un motore di assegnazione che vincola un ticket a un operatore bloccandolo in via esclusiva, disabilitando la possibilità di riassegnazione o di accodamento condiviso durante i picchi."
+    },
+    "reasoning_steps": [
+      "1. IDENTIFICAZIONE: Cerca macro-blocchi sequenziali di User Task racchiusi in una singola Lane senza l'utilizzo di Inclusive o Parallel Gateway che li colleghino ad altre Lane per la condivisione del carico.",
+      "2. VALUTAZIONE: Verifica se questa struttura rigida crea colli di bottiglia, isolando un singolo attore sotto un carico di lavoro ingestibile senza possibilità di aiuto da parte di colleghi o team di supporto.",
+      "3. VERIFICA SALVAGUARDIE ED ECCEZIONI: Controlla l'assenza di percorsi cooperativi in compiti ad alto stress. Assicurati che non si tratti di un falso positivo (es. task che per rigorosi motivi legali, di privacy o di sicurezza devono necessariamente restare confinati a una singola persona autorizzata senza possibilità di delega)."
+    ],
+    "recommendation_pattern": {
+      "action": "Inserire meccanismi di lavoro cooperativo. Modellare la collaborazione come parte integrante del processo.",
+      "bpmn_correction": "Introdurre un Inclusive Gateway a monte dei colli di bottiglia, permettendo al flusso di dividersi temporaneamente tra più Lane per lo smaltimento collaborativo dei task. Per task ad alto carico cognitivo, inserire un User Task congiunto o un Intermediate Throw Event per richiedere assistenza ad un collega."
+    },
+    "examples": [
+      {
+        "as_is_1": "Nel modello Gestione Reclami, il task Analisi Tecnica del Reclamo si trova interamente all'interno della Lane denominata Specialista Livello 2. Durante i picchi di lavoro lo specialista accumula un backlog enorme e va in burnout, perché il processo non prevede che altri colleghi possano attingere al suo carico di lavoro per aiutarlo.",
+        "to_be_1": "Prima dell'analisi tecnica, viene inserito un Inclusive Gateway (es. 'Backlog Critico?'). Se il carico dello specialista è eccessivo, il gateway devia una parte verso la Lane del Team di Supporto Generico per una pre-analisi collaborativa, attuando un reale Load-Balancing."
+      },
+      {
+        "as_is_2": "Lo User Task di \"Revisione Progetto Complesso\" è assegnato architetturalmente a un singolo operatore Senior. Il BPMN è sequenziale e monolitico, non prevede la condivisione della pratica. L'operatore fa turni massacranti per non bloccare i lavori.",
+        "to_be_2": "Se il progetto è classificato come \"Ad alta complessità\", il flusso si sdoppia tramite un Parallel Gateway, istanziando due User Task simultanei per Senior 1 e Senior 2, attuando una co-revisione collaborativa e abbattendo il peso psicologico individuale."
+      }
+    ]
+  },
+  {
+    "id": "ES-21",
+    "smell_name": "Asimmetria valutativa delle performance",
+    "macro_principle": "Benessere Lavorativo e Qualità del Lavoro",
+    "sources": [
+      "Fairness in Automated Decision Making (2023)",
+      "Direttiva (UE) 2019/1158 (Equilibrio tra attività professionale e vita familiare per i genitori e i prestatori di assistenza)",
+      "Codice delle Pari Opportunità (D.Lgs. 198/2006)"
+    ],
+    "ethical_rationale": "Un processo etico tutela i lavoratori in modo che non subiscano discriminazioni procedurali o valutative. L'azione scorretta si concretizza quando un processo di valutazione delle performance, di calcolo dei bonus o di assegnazione di task premiali si basa rigidamente su metriche assolute, penalizzando strutturalmente chi usufruisce (per diritto) ad esempio a congedi parentali o permessi di cura.",
+    "semantic_context": {
+      "target_situations": "Qualsiasi processo in cui il sistema valuta l'essere umano con un algoritmo senza normalizzare i KPI incrociandoli con i giorni effettivamente lavorati, permessi, stato di salute, stato familiare (es. malattia prolungata, maternità/paternità).",
+      "dangerous_actions": "Anti-pattern Esplicito: Un Business Rule Task che calcola bonus/promozioni omettendo l'incrocio con un Data Object esterno (es. Database Assenze) o senza richiamare un Service Task, ignorando del tutto il contesto lavorativo e personale del dipendente. Anti-pattern Implicito: Un algoritmo di IA o sistema di ranking opaco che valuta il personale unicamente su metriche di throughput, penalizzando implicitamente il congedo senza esplicitarlo nel diagramma."
+    },
+    "reasoning_steps": [
+      "1. IDENTIFICAZIONE: Cerca nel diagramma Business Rule Task o Service Task usati per premialità o rinnovi e verifica l'assenza di Data Object o flussi in ingresso da sistemi HR che forniscono metriche di normalizzazione come le ore/giorni realmente lavorati.",
+      "2. VALUTAZIONE: Verifica se il processo valuta le performance in modo puramente assoluto, penalizzando automaticamente chiunque si sia assentato per motivi tutelati dalla legge.",
+      "3. VERIFICA SALVAGUARDIE ED ECCEZIONI: Controlla se il calcolo omette volontariamente i fattori di bilanciamento HR. Assicurati che non si tratti di un falso positivo (es. allocazione di task proporzionale all'orario per lavori a cottimo o dove la presenza fisica è un requisito assoluto)."
+    ],
+    "recommendation_pattern": {
+      "action": "Normalizzare le metriche algoritmiche, introducendo un calcolo relativo della performance per tutelare i lavoratori.",
+      "bpmn_correction": "Integrare nel Business Rule Task un input addizionale proveniente da un Data Store o sistema esterno ('Dati HR - Congedi'). L'algoritmo nel task automatico deve calcolare il punteggio in base alla 'Produttività Relativa' (pratiche/ore lavorate, stato salute, familiare etc.) anziché assoluta."
+    },
+    "examples": [
+      {
+        "as_is_1": "Il task automatico Calcola Produttività premia e instrada verso il rinnovo contrattuale solo chi supera le 1000 pratiche annue. Un dipendente in congedo per 3 mesi, avendone chiuse 800, viene scartato.",
+        "to_be_1": "Prima della decisione, un Service Task interroga il database HR. L'algoritmo riproporziona l'obiettivo a 750 pratiche per il dipendente in congedo. Il Gateway valuta la performance normalizzata.",
+        "as_is_2": "L'algoritmo di calcolo performance conta il numero puro di recensioni a 5 stelle ricevute in call center. Un dipendente part-time (che lavora mezza giornata per assistere il genitore malato) avrà statisticamente sempre meno recensioni assolute di un full-time, risultando sempre come inferiore per l'algoritmo.",
+        "to_be_2": "Un Service Task normalizza i punteggi calcolando invece la percentuale di recensioni a 5 stelle sul totale delle chiamate gestite dal singolo operatore, garantendo un'equa valutazione qualitativa e non una stima truccata dalle ore totali a terminale."
+      }
+    ]
+  }
+]

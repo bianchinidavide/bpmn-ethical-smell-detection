@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+#MainMenu {visibility: hidden;}
+header {visibility: hidden;}
+footer {visibility: hidden;}
+
+h1, h2, h3, p, li, label, .stMarkdown {
+    font-family: 'Poppins', sans-serif !important;
+    color: #1e293b; /* Grigio antracite morbidissimo */
+}
+
+h1, h2, h3 {
+    font-weight: 400 !important;
+}
+
+.stMarkdown p, .stMarkdown li, label {
+    font-size: 1.1rem; 
+    line-height: 1.7;
+    font-weight: 300; 
+}
+
+.ethical-card {
+    font-family: 'Poppins', sans-serif !important;
+    border: 1px solid #e2e8f0; 
+    border-left: 5px solid #d93025; 
+    border-radius: 8px; 
+    padding: 25px; 
+    margin-bottom: 20px; 
+    background-color: #ffffff; 
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+}
+
+.ethical-card li {
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    line-height: 1.6 !important;
+    color: #334155 !important;
+}
+
+iframe[title="streamlit_components.v1.components.html"] {
+    width: 90vw !important;
+    margin-left: calc(-45vw + 50%) !important;
+    max-width: none !important;
+}
+
+.block-container {
+    padding-top: 0rem !important;
+    padding-bottom: 0rem !important;
+    padding-left: 5% !important;
+    padding-right: 5% !important;
+    max-width: 1400px !important;
+    margin: 0 auto !important;
+}
+
+.hero-header {
+    background-color: #f1f5f9;
+    padding-top: 30px; 
+    padding-bottom: 30px;
+    margin-left: -20rem; 
+    margin-right: -20rem;
+    padding-left: 20rem;
+    padding-right: 20rem;
+    margin-bottom: 2rem; 
+    text-align: left; 
+    border-bottom: 1px solid #e2e8f0; 
+}
+.hero-header h1 { 
+    color: #0f172a !important; 
+    font-size: 2.8rem; 
+    margin-bottom: 10px; 
+    letter-spacing: 1px; 
+}
+.hero-header p { 
+    color: #475569 !important; 
+}
+
+div[data-testid="stButton"] button[kind="primary"] p {
+    color: #ffffff !important;
+    font-weight: 400 !important;
+}
+
+div[data-testid="stButton"] button[disabled] {
+    background-color: #f1f5f9 !important;
+    border: 1px solid #cbd5e1 !important;
+}
+div[data-testid="stButton"] button[disabled] p {
+    color: #64748b !important; 
+}
+
+@media print {
+    header, footer, [data-testid="stSidebar"], [data-testid="stHeader"], .stButton {
+        display: none !important;
+    }
+    
+    .block-container {
+        padding: 0 !important;
+        max-width: 100% !important;
+    }
+    
+    .ethical-card {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.compilation-guide li {
+    font-size: 1.05rem !important;
+    line-height: 1.7 !important;
+    font-weight: 300 !important;
+}
+
+.compilation-guide strong {
+    font-weight: 600 !important;
+}
