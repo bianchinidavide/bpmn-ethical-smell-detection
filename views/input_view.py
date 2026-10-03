@@ -2,7 +2,7 @@ import base64
 from typing import Optional
 import streamlit as st
 
-from bpmn_parser import parse_bpmn_to_text, BPMNParserError
+from services.bpmn_parser import parse_bpmn_to_text, BPMNParserError
 from services.auditor import run_auditor
 
 ALLOWED_IMAGE_TYPES = {"image/png", "image/jpeg", "image/jpg"}
@@ -10,7 +10,7 @@ MAX_WORDS_LIMIT = 200
 
 def render_input_view() -> None:
     """Render the input acquisition view for BPMN ethical audit."""
-    
+
     # Header section
     st.markdown(
         """
@@ -81,7 +81,7 @@ def render_input_view() -> None:
 
         st.markdown("<br>", unsafe_allow_html=True)
 
-        submit_clicked: bool = False        
+        submit_clicked: bool = False
         can_analyze = (bpmn_file is not None) and (0 < word_count <= MAX_WORDS_LIMIT)
 
         col_spacer, col_btn = st.columns([3, 2])
@@ -150,7 +150,7 @@ def render_input_view() -> None:
         except BPMNParserError as err: #error from parser
             st.error(f"Errore durante l'elaborazione del diagramma BPMN: {err}")
             return
-        except Exception as e: # Extra to control error 
+        except Exception as e: # Extra to control error
             st.error(f"Si è verificato un errore imprevisto durante l'analisi: {e}")
             return
         finally:

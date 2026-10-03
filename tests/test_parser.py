@@ -9,7 +9,7 @@ Verifies:
 from pathlib import Path
 import pytest
 
-from bpmn_parser import (
+from services.bpmn_parser import (
     BPMNParserError,
     extract_connections_and_adjacency,
     extract_lane_mappings,
